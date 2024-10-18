@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:55 GMT -->
+<th:block th:insert="/user/layout/head.html" ></th:block>
+<body>
+<th:block th:insert="/user/layout/top.html" ></th:block>
+
+<!-- Contact 2 start -->
+<div class="contact-2 content-area-6">
+    <div class="container">
+        <div class="main-title mb-60">
+            <h1>Contact Us</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <!-- Contact details start -->
+                <div class="contact-info">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-list">
+                        <li><i class="fa fa-map-marker"></i> 20/F Green Road, Dhaka</li>
+                        <li><a href="tel:0477-0477-8556-552"><i class="fa fa-phone"></i> +55 417 634 7071</a></li>
+                        <li><a href="mailto:info@themevessel.com"><i class="fa fa-envelope"></i> info@themevessel.com</a></li>
+                        <li><a href="tel:0477-0477-8556-552"><i class="fa fa-fax"></i> +0477 85X6 552</a></li>
+                    </ul>
+                    <h3>Follow Us</h3>
+                    <ul class="social-list clearfix">
+                        <li><a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#" class="rss-bg"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#" class="linkedin-bg"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+                <!-- Contact details end -->
+            </div>
+            <div class="col-lg-7 col-md-12 col-sm-12">
+                <!-- Contact form start -->
+                <div class="contact-form">
+                    <form action="#" method="GET" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group name">
+                                    <input type="text" name="name" class="form-control" placeholder="Name" aria-label="Full Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group email">
+                                    <input type="email" name="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group subject">
+                                    <input type="text" name="subject" class="form-control" placeholder="Subject" aria-label="Subject">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group number">
+                                    <input type="text" name="phone" class="form-control" placeholder="Phone" aria-label="Phone Number">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group message">
+                                    <textarea  class="form-control" name="message" placeholder="Write message" aria-label="Write message"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="send-btn text-center">
+                                    <button type="submit" class="btn-md btn-theme btn-4 btn-7">Send Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Contact form end -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact 2 end -->
+
+<!-- Google map start -->
+<div class="section">
+    <div class="map">
+        <div id="map" class="contact-map"></div>
+    </div>
+</div>
+<!-- Google map end -->
+<!-- Footer start -->
+<th:block th:insert="/user/layout/footer.html"></th:block>
+<!-- Footer end -->
+
+<th:block th:insert="/user/layout/js.html"></th:block>
+
+<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4omYJlOaP814WDcCG8eubXcbhB-44Uac"></script>
+<script>
+    function LoadMap(propertes) {
+        var defaultLat = 40.7110411;
+        var defaultLng = -74.0110326;
+        var mapOptions = {
+            center: new google.maps.LatLng(defaultLat, defaultLng),
+            zoom: 15,
+            scrollwheel: false,
+            styles: [
+                {
+                    featureType: "administrative",
+                    elementType: "labels",
+                    stylers: [
+                        {visibility: "off"}
+                    ]
+                },
+                {
+                    featureType: "water",
+                    elementType: "labels",
+                    stylers: [
+                        {visibility: "off"}
+                    ]
+                },
+                {
+                    featureType: 'poi.business',
+                    stylers: [{visibility: 'off'}]
+                },
+                {
+                    featureType: 'transit',
+                    elementType: 'labels.icon',
+                    stylers: [{visibility: 'off'}]
+                },
+            ]
+        };
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        var infoWindow = new google.maps.InfoWindow();
+        var myLatlng = new google.maps.LatLng(40.7110411, -74.0110326);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map
+        });
+        (function (marker) {
+            google.maps.event.addListener(marker, "click", function (e) {
+                infoWindow.setContent("" +
+                    "<div class='map-edu contact-map-content'>" +
+                    "<div class='map-content'>" +
+                    "<p class='address'>123 Kathal St. Tampa City, </p>" +
+                    "<ul class='map-edu-list'> " +
+                    "<li><i class='fa fa-phone'></i>  +0477 85X6 552</li> " +
+                    "<li><i class='fa fa-envelope'></i>  info@themevessel.com</li> " +
+                    "<li><a href='index.html'><i class='fa fa-globe'></i>  http://http://themevessel.com</li></a> " +
+                    "</ul>" +
+                    "</div>" +
+                    "</div>");
+                infoWindow.open(map, marker);
+            });
+        })(marker);
+    }
+    LoadMap();
+</script>
+
+</body>
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:55 GMT -->
+</html>

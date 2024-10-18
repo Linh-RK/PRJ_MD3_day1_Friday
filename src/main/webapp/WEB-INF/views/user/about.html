@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:54 GMT -->
+<!--<th:block th:insert="/user/layout/head.html" ></th:block>-->
+<head>
+    <title>Hotel Alpha - Booking and Reservation Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/css/animate.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/css/bootstrap-submenu.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/css/bootstrap-select.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/fonts/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/fonts/flaticon/font/flaticon.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/fonts/linearicons/style.css}">
+    <link rel="stylesheet" type="text/css"  th:href="@{/assets2/user/css/jquery.mCustomScrollbar.css}">
+    <link rel="stylesheet" type="text/css"  th:href="@{/assets2/user/css/bootstrap-datepicker.min.css}">
+    <link rel="stylesheet" type="text/css"  th:href="@{/assets2/user/css/dropzone.css}">
+    <link rel="stylesheet" type="text/css"  th:href="@{/assets2/user/css/slick.css}">
+    <link rel="stylesheet" th:href="@{/assets2/user/css/leaflet.css}" type="text/css">
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/css/initial.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/css/style.css}">
+    <link rel="stylesheet" type="text/css" id="style_sheet" th:href="@{/assets2/user/css/default.css}">
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" th:href="@{/assets/assets2/user/img/favicon.icon}" type="image/x-icon" >
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets2/user/css/ie10-viewport-bug-workaround.css}">
+
+
+    <script  th:src="@{/assets2/user/js/ie-emulation-modes-warning.js}"></script>
+
+
+</head>
+<body>
+<!--<th:block th:insert="/user/layout/top.html" ></th:block>-->
+<header class="main-header" id="main-header-2">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand logos" th:href="@{/user/index}">
+                <img th:src="@{/assets2/user/img/logos/logo.png}" alt="logo" class="logo-photo" />
+                <img
+                        th:src="@{/assets2/user/img/logos/white-logo.png}"
+                        alt="logo"
+                        class="logo-photo2"
+                />
+            </a>
+            <button class="navbar-toggler" id="drawer" type="button">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div
+                    class="navbar-collapse collapse w-100 justify-content-end"
+                    id="navbar"
+            >
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown active">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdownMenuLink"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            Index
+                        </a>
+                        <ul
+                                class="dropdown-menu"
+                                aria-labelledby="navbarDropdownMenuLink"
+                        >
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/index}">Index 1</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdownMenuLink2"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            Rooms
+                        </a>
+                        <ul
+                                class="dropdown-menu"
+                                aria-labelledby="navbarDropdownMenuLink2"
+                        >
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/rooms-col-2}"
+                                >Rooms 2 Column</a
+                                >
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/rooms-details}"
+                                >Rooms Details 1</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdownMenuLink6"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            Pages
+                        </a>
+                        <ul
+                                class="dropdown-menu"
+                                aria-labelledby="navbarDropdownMenuLink"
+                        >
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#"
+                                >Gallery</a
+                                >
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/user/gallery-3column}"
+                                        >Gallery 3 Column</a
+                                        >
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#"
+                                >About Us</a
+                                >
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/user/about}"
+                                        >About Us 1</a
+                                        >
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/booking-system}"
+                                >Booking System</a
+                                >
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">Staff</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/user/staff}">Staff 1</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">Events</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/user/events}">Events 1</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/user/events-details}"
+                                        >Events Details</a
+                                        >
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/pricing-tables}"
+                                >Pricing Tables</a
+                                >
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/typography}"
+                                >Typography</a
+                                >
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/user/faq}">Faq</a></li>
+                            <li><a class="dropdown-item" th:href="@{/user/login}">Login</a></li>
+                            <li><a class="dropdown-item" th:href="@{/user/signup}">Sigup</a></li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/forgot-password}"
+                                >Forgot Password</a
+                                >
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/404}">404 Error</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdownMenuLink5"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            Blog
+                        </a>
+                        <ul
+                                class="dropdown-menu"
+                                aria-labelledby="navbarDropdownMenuLink5"
+                        >
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/blog-right-sidebar}"
+                                >Blog Right Sidebar</a
+                                >
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/blog-left-sidebar}"
+                                >Blog Left Sidebar</a
+                                >
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/blog-full-width}"
+                                >Blog Fullwidth</a
+                                >
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/blog-creative}"
+                                >Blog Creative</a
+                                >
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/blog-details}"
+                                >Blog Details</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdownMenuLink4"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            Contact
+                        </a>
+                        <ul
+                                class="dropdown-menu"
+                                aria-labelledby="navbarDropdownMenuLink4"
+                        >
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/contact}">Contact 1</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/user/booking-system}" class="btn-lg btn-4 btn-6"
+                        >Booking System</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="header-search animated fadeInDown">
+                <form class="form-inline">
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="searchKey"
+                            placeholder="Search..."
+                    />
+                    <div class="search-btns">
+                        <button type="submit" class="btn btn-default">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+<!----------------------------------------------------------------->
+<!-- About hotel alpha start -->
+<div class="about-hotel-alpha content-area-6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="about-img-section">
+                    <div class="image-box">
+                        <div class="image-1"><img th:src="@{/assets2/user/img/about/img-4.jpg}" class="rounded" alt="photo"></div>
+                        <div class="image-2"><img th:src="@{/assets2/user/img/about/img-5.jpg}" class="rounded" alt="photo"></div>
+                    </div>
+                    <div class="about-box-Experience">
+                        <h3 class="text-white">38</h3>
+                        <p class="mb-0 text-white">Years of Experience</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 align-self-center">
+                <div class="about-content-section">
+                    <h5>Hotel <span>Bayview</span></h5>
+                    <h1>Welcome To Hotel Alpha</h1>
+                    <ul class="network-list mb-40">
+                        <li>
+                            <i class="icon fa fa-building-o"></i>
+                            <h4>Compact and Comfortable Rooms</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed magna aliqua.eius to mod incididunt</p>
+                        </li>
+                        <li>
+                            <i class="icon flaticon-room-service"></i>
+                            <h4>Friendly Fair Prices and Service</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed magna aliqua.eius to mod incididunt</p>
+                        </li>
+                        <li>
+                            <i class="icon flaticon-school-call-phone-reception"></i>
+                            <h4>Public Safety and 24/7 Security</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed magna aliqua.eius to mod incididunt</p>
+                        </li>
+                    </ul>
+                    <a class="btn-lg btn-5" href="#"><span>Explore More</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About hotel alpha start -->
+
+<!-- Our facilties section start -->
+<div class="our-facilties-section content-area-5 bg-white">
+    <div class="overlay">
+        <div class="container">
+            <!-- Main title -->
+            <div class="main-title">
+                <h1>Our Facilties</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="services-box-2 d-flex">
+                        <div class="icon">
+                            <i class="flaticon-school-call-phone-reception"></i>
+                        </div>
+                        <div class="contant">
+                            <h3><a href="#">24-hour Reception</a></h3>
+                            <p>Lorem ipsum dolor sit amet, conser adipisicing elit. Numquam deleniti amet quia voluptate laboriosam</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="services-box-2 d-flex">
+                        <div class="icon">
+                            <i class="flaticon-room-service"></i>
+                        </div>
+                        <div class="contant">
+                            <h3><a href="#">Room Service</a></h3>
+                            <p>Lorem ipsum dolor sit amet, conser adipisicing elit. Numquam deleniti amet quia voluptate laboriosam</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="services-box-2 d-flex">
+                        <div class="icon">
+                            <i class="flaticon-graph-line-screen"></i>
+                        </div>
+                        <div class="contant">
+                            <h3><a href="#">Flat Screen TV</a></h3>
+                            <p>Lorem ipsum dolor sit amet, conser adipisicing elit. Numquam deleniti amet quia voluptate laboriosam</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="services-box-2 d-flex">
+                        <div class="icon">
+                            <i class="flaticon-weightlifting"></i>
+                        </div>
+                        <div class="contant">
+                            <h3><a href="#">Gym</a></h3>
+                            <p>Lorem ipsum dolor sit amet, conser adipisicing elit. Numquam deleniti amet quia voluptate laboriosam</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="services-box-2 d-flex">
+                        <div class="icon">
+                            <i class="flaticon-parking"></i>
+                        </div>
+                        <div class="contant">
+                            <h3><a href="#">Free Parking</a></h3>
+                            <p>Lorem ipsum dolor sit amet, conser adipisicing elit. Numquam deleniti amet quia voluptate laboriosam</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="services-box-2 d-flex">
+                        <div class="icon">
+                            <i class="flaticon-wifi-connection-signal-symbol"></i>
+                        </div>
+                        <div class="contant">
+                            <h3><a href="#">Free Wi-Fi</a></h3>
+                            <p>Lorem ipsum dolor sit amet, conser adipisicing elit. Numquam deleniti amet quia voluptate laboriosam</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Our facilties section end -->
+
+<!-- Counters strat -->
+<div class="counters">
+    <div class="counters-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="counter-box">
+                        <div class="counter-box-inner">
+                            <div class="icon-img">
+                                <img th:src="@{/assets2/user/img/counter/img-2.png}" alt="photo">
+                            </div>
+                            <h1 class="counter">967</h1>
+                            <h5>Guest Stay</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="counter-box">
+                        <div class="counter-box-inner">
+                            <div class="icon-img">
+                                <img th:src="@{/assets2/user/img/counter/img-3.png}" alt="photo">
+                            </div>
+                            <h1 class="counter">396</h1>
+                            <h5>Book Room</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="counter-box">
+                        <div class="counter-box-inner">
+                            <div class="icon-img">
+                                <img th:src="@{/assets2/user/img/counter/img-1.png}" alt="photo">
+                            </div>
+                            <h1 class="counter">1276</h1>
+                            <h5>Member Stay</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="counter-box">
+                        <div class="counter-box-inner">
+                            <div class="icon-img">
+                                <img th:src="@{/assets2/user/img/counter/img-4.png}" alt="photo">
+                            </div>
+                            <h1 class="counter">177</h1>
+                            <h5>Meals Served</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Counters end -->
+
+<!-- Testimonial 5 start -->
+<div class="testimonial-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 title align-self-center">
+<!--                <h1 style="background-image: url(img/ts-number.jpg);">69</h1>-->
+                <h2>Millions of Customers <br> Like Our Services</h2>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="testimonial-detail d-flex">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active dbt1" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="dbt2" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="dbt3" aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" class="dbt4" aria-label="Slide 4"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" class="dbt5" aria-label="Slide 5"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="testimonial-info">
+                                    <div class="user-pic">
+                                        <img th:src="@{/assets2/user/img/avatar/avatar-1.jpg}" alt="user">
+                                    </div>
+                                    <div class="info">
+                                        <h4 class="testimonial-name">Maikel Alisa</h4>
+                                        <h5 class="job">Creative Director</h5>
+                                    </div>
+                                    <div class="testimonial-text">
+                                        <p>“ Maecenas finibus eros purus, sit amet condimentum arcu ullamcorper sed. In eu gravida libero. Praesent bibendum rutrum quam, lobortis vehicula nibh placerat at. Vivamus pretium ultricies nisl non eleifend. Aliquam eget”.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="testimonial-info">
+                                    <div class="user-pic">
+                                        <img th:src="@{/assets2/user/img/avatar/avatar-2.jpg}" alt="user">
+                                    </div>
+                                    <div class="info">
+                                        <h4 class="testimonial-name">Richard Hartisona</h4>
+                                        <h5 class="job">CEO Founder</h5>
+                                    </div>
+                                    <div class="testimonial-text">
+                                        <p>“ Maecenas finibus eros purus, sit amet condimentum arcu ullamcorper sed. In eu gravida libero. Praesent bibendum rutrum quam, lobortis vehicula nibh placerat at. Vivamus pretium ultricies nisl non eleifend. Aliquam eget”.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="testimonial-info">
+                                    <div class="user-pic">
+                                        <img th:src="@{/assets2/user/img/avatar/avatar-3.jpg}" alt="user">
+                                    </div>
+                                    <div class="info">
+                                        <h4 class="testimonial-name">Hartisona Richard</h4>
+                                        <h5 class="job">Office Manager</h5>
+                                    </div>
+                                    <div class="testimonial-text">
+                                        <p>“ Maecenas finibus eros purus, sit amet condimentum arcu ullamcorper sed. In eu gravida libero. Praesent bibendum rutrum quam, lobortis vehicula nibh placerat at. Vivamus pretium ultricies nisl non eleifend. Aliquam eget”.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="testimonial-info">
+                                    <div class="user-pic">
+                                        <img th:src="@{/assets2/user/img/avatar/avatar-4.jpg}" alt="user">
+                                    </div>
+                                    <div class="info">
+                                        <h4 class="testimonial-name">Pitarshon Roky</h4>
+                                        <h5 class="job">Web Designer, Uk</h5>
+                                    </div>
+                                    <div class="testimonial-text">
+                                        <p>“ Maecenas finibus eros purus, sit amet condimentum arcu ullamcorper sed. In eu gravida libero. Praesent bibendum rutrum quam, lobortis vehicula nibh placerat at. Vivamus pretium ultricies nisl non eleifend. Aliquam eget”.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="testimonial-info">
+                                    <div class="user-pic">
+                                        <img th:src="@{/assets2/user/img/avatar/avatar-6.jpg}" alt="user">
+                                    </div>
+                                    <div class="info">
+                                        <h4 class="testimonial-name">Richard Hartisona</h4>
+                                        <h5 class="job">CEO Founder</h5>
+                                    </div>
+                                    <div class="testimonial-text">
+                                        <p>“ Maecenas finibus eros purus, sit amet condimentum arcu ullamcorper sed. In eu gravida libero. Praesent bibendum rutrum quam, lobortis vehicula nibh placerat at. Vivamus pretium ultricies nisl non eleifend. Aliquam eget”.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial 5 end -->
+
+<!-- staff section start -->
+<div class="staff-section content-area comon-slick bg-white">
+    <div class="container">
+        <!-- Main title -->
+        <div class="main-title">
+            <h1>Our Staff</h1>
+            <p>Meet out small team that make those great products.</p>
+        </div>
+        <div class="slick row comon-slick-inner" data-slick='{"slidesToShow": 4, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": 2}}, {"breakpoint": 768,"settings":{"slidesToShow": 1}}]}'>
+            <div class="item slide-box">
+                <div class="staff-box-1">
+                    <div class="photo">
+                        <img th:src="@{/assets2/user/img/staff/img-1.jpg}" alt="staff" class="img-fluid w-100">
+                        <div class="overlay">
+                            <div class="border">
+                                <div class="icon-holder">
+                                    <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h4 class="title">
+                            <a href="staff.html">Zamil Roy</a>
+                        </h4>
+                        <p>Hotel Developer</p>
+                        <p><a href="tel:+55-417-634-7071">+1 204 777 0187</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="item slide-box">
+                <div class="staff-box-1">
+                    <div class="photo">
+                        <img th:src="@{/assets2/user/img/staff/img-2.jpg}" alt="staff" class="img-fluid w-100">
+                        <div class="overlay">
+                            <div class="border">
+                                <div class="icon-holder">
+                                    <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h4 class="title">
+                            <a href="staff.html">Karen Paran</a>
+                        </h4>
+                        <p>Hotel Director</p>
+                        <p><a href="tel:+55-417-634-7071">+1 204 777 0187</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="item slide-box">
+                <div class="staff-box-1">
+                    <div class="photo">
+                        <img th:src="@{/assets2/user/img/staff/img-1.jpg}" alt="staff" class="img-fluid w-100">
+                        <div class="overlay">
+                            <div class="border">
+                                <div class="icon-holder">
+                                    <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h4 class="title">
+                            <a href="staff.html">Zamil Roy</a>
+                        </h4>
+                        <p>Hotel Developer</p>
+                        <p><a href="tel:+55-417-634-7071">+1 204 777 0187</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="item slide-box">
+                <div class="staff-box-1">
+                    <div class="photo">
+                        <img th:src="@{/assets2/user/img/staff/img-4.jpg}" alt="staff" class="img-fluid w-100">
+                        <div class="overlay">
+                            <div class="border">
+                                <div class="icon-holder">
+                                    <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h4 class="title">
+                            <a href="staff.html">Shakira Kaisar</a>
+                        </h4>
+                        <p>Support Manager</p>
+                        <p><a href="tel:+55-417-634-7071">+1 204 777 0187</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="item slide-box">
+                <div class="staff-box-1">
+                    <div class="photo">
+                        <img th:src="@{/assets2/user/img/staff/img-3.jpg}" alt="staff" class="img-fluid w-100">
+                        <div class="overlay">
+                            <div class="border">
+                                <div class="icon-holder">
+                                    <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
+                                </div>
+                                <div class="icon-holder">
+                                    <a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h4 class="title">
+                            <a href="staff.html">Maikel John </a>
+                        </h4>
+                        <p>Hotel Manager</p>
+                        <p><a href="tel:+55-417-634-7071">+1 204 777 0187</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- staff section ebd -->
+
+<!-- Partners strat -->
+<div class="partners">
+    <div class="container">
+        <h4>Brands <span>$ Partners</span></h4>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="custom-slider slide-box-btn">
+                    <div class="custom-box"><img th:src="@{/assets2/user/img/brand/brand-1.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets2/user/img/brand/brand-2.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets2/user/img/brand/brand-3.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets2/user/img/brand/brand-4.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets2/user/img/brand/brand-5.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets2/user/img/brand/brand-6.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets2/user/img/brand/brand-1.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets2/user/img/brand/brand-2.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets2/user/img/brand/brand-3.png}" alt="brand"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Partners end -->
+
+<!-- Footer start -->
+<!--<th:block th:insert="/user/layout/footer.html"></th:block>-->
+<footer class="main-footer clearfix">
+    <div class="container">
+        <!-- Footer info-->
+        <div class="footer-info">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer-item">
+                        <div class="main-title-2">
+                            <h1>Contact Us</h1>
+                        </div>
+                        <ul class="personal-info">
+                            <li>
+                                <i class="fa fa-map-marker"></i>
+                                Address: 44 New Design Street,
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope"></i>
+                                Email:<a href="mailto:sales@hotelempire.com">info@themevessel.com</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-phone"></i>
+                                Phone: <a href="tel:+55-417-634-7071">+0477 85X6 552</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-fax"></i>
+                                Fax: +0477 85X6 552
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12">
+                    <div class="footer-item">
+                        <div class="main-title-2">
+                            <h1>Booking</h1>
+                        </div>
+                        <ul class="links">
+                            <li>
+                                <a href="rooms-col-3.html">Rooms & Suites</a>
+                            </li>
+                            <li>
+                                <a href="rooms-details.html">Restaurant</a>
+                            </li>
+                            <li>
+                                <a href="rooms-col-2.html">Hotel</a>
+                            </li>
+                            <li>
+                                <a href="#">Our Facilties</a>
+                            </li>
+                            <li>
+                                <a href="rooms-col-3.html">Rooms</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12">
+                    <div class="footer-item">
+                        <div class="main-title-2">
+                            <h1>About</h1>
+                        </div>
+                        <ul class="links">
+                            <li>
+                                <a href="about.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="blog-right-sidebar.html">Blog & Events</a>
+                            </li>
+                            <li>
+                                <a href="booking-system.html">Booking</a>
+                            </li>
+                            <li>
+                                <a href="gallery-3column.html">Gallery</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer-item newsletter">
+                        <div class="main-title-2">
+                            <h1>Newsletter</h1>
+                        </div>
+                        <div class="newsletter-inner">
+                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <form class="form-inline" action="#" method="GET">
+                                <input type="text" class="form-control" id="inlineFormInputName4" placeholder="Your Email">
+                                <button type="submit" class="btn btn-small"><i class="fa fa-paper-plane"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copy-right">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <p> &copy;  2021 <a href="http://themevessel.com/" target="_blank">Theme Vessel</a>. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="clearfix"></div>
+                    <ul class="social-list">
+                        <li><a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" class="rss-bg"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#" class="linkedin-bg"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer end -->
+
+
+
+<script th:src="@{/assets2/user/js/jquery.min.js}"></script>
+<script th:src="@{/assets2/user/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets2/user/js/bootstrap-submenu.js}"></script>
+<script th:src="@{/assets2/user/js/jquery.mb.YTPlayer.js}"></script>
+<script th:src="@{/assets2/user/js/wow.min.js}"></script>
+<script th:src="@{/assets2/user/js/bootstrap-select.min.js}"></script>
+<script th:src="@{/assets2/user/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/assets2/user/js/jquery.scrollUp.js}"></script>
+<script th:src="@{/assets2/user/js/jquery.mCustomScrollbar.concat.min.js}"></script>
+<script th:src="@{/assets2/user/js/jquery.filterizr.js}"></script>
+<script th:src="@{/assets2/user/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets2/user/js/slick.min.js}"></script>
+<script th:src="@{/assets2/user/js/sidebar.js}"></script>
+<script th:src="@{/assets2/user/js/app.js}"></script>
+<script th:src="@{/assets2/user/js/dropzone.js}"></script>
+<script th:src="@{/assets2/user/js/jquery.magnific-popup.min.js}"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script th:src="@{/assets2/user/js/ie10-viewport-bug-workaround.js}"></script>
+<!-- Custom javascript -->
+</body>
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:54 GMT -->
+</html>
