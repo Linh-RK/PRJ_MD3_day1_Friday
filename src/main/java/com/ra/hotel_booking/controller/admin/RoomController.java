@@ -2,6 +2,7 @@ package com.ra.hotel_booking.controller.admin;
 
 import com.ra.hotel_booking.model.entity.DTO.RoomDTO;
 import com.ra.hotel_booking.model.entity.Room;
+import com.ra.hotel_booking.model.entity.Search;
 import com.ra.hotel_booking.model.entity.constants.AvailabilityStatus;
 import com.ra.hotel_booking.model.entity.constants.RoomType;
 import com.ra.hotel_booking.model.service.UploadFile.UploadFileService;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -24,11 +27,37 @@ public class RoomController {
     private RoomService roomService;
     @Autowired
     private UploadFileService uploadFileService;
+    public int page;
+    public static String oldNameRoom = "";
+    public int totalPages;
     public static List<RoomType> roomTypeList = Arrays.asList(RoomType.values());
     public static List<AvailabilityStatus> availabilityStatusList = Arrays.asList(AvailabilityStatus.values());
+
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("rooms", roomService.findAll());
+    public String index(@ModelAttribute("search") Search search,
+                        @RequestParam(name = "page",defaultValue = "0") int page,
+                        Model model) {
+        List<Room> roomList ;
+
+        if(search.getPriceMax() == null){
+            search.setPriceMax(roomService.maxPrice());
+        }
+        if(search.getPriceMax() == null){
+            search.setPriceMax(roomService.maxPrice());
+        }
+        totalPages = roomService.totalPages(search);
+
+        if(page +1 > totalPages|| page < 0){
+            page = totalPages - 1;
+        }
+
+        roomList = roomService.findAllPerPage(page, search);
+        model.addAttribute("rooms", roomList);
+        model.addAttribute("search", search);
+        model.addAttribute("page", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("roomTypeList", roomTypeList);
+        model.addAttribute("availabilityStatusList", availabilityStatusList);
         return "/admin/index";
     }
 //    --------------------------------------------------------------------------
@@ -41,7 +70,7 @@ public class RoomController {
     }
 
     @PostMapping("/add")
-    public String hadleAdd(Model model,@Valid @ModelAttribute("roomDTO") RoomDTO roomDTO
+    public String handleAdd(Model model,@Valid @ModelAttribute("roomDTO") RoomDTO roomDTO
     ,BindingResult result,RedirectAttributes redirectAttributes) {
         if (result.hasErrors() || roomDTO.getImagedd().getSize() <= 0) {
             model.addAttribute("roomDTO", roomDTO);

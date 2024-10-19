@@ -15,6 +15,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Min;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -61,13 +62,25 @@ public class RoomServiceImpl implements RoomService {
         roomDAO.delete(id);
     }
 
-//    @Override
-//    public int totalElement(Search search) {
-//        return 0;
-//    }
-//
-//    @Override
-//    public List<Room> findAll(int page, Search search) {
-//        return Collections.emptyList();
-//    }
+    @Override
+    public Double maxPrice() {
+        return roomDAO.findAll().stream().map(Room::getPricePerNight).max(Comparator.comparingDouble(Double::doubleValue)).orElse(0.0);
+    }
+
+    @Override
+    public int totalElement(Search search) {
+        return roomDAO.totalElement(search);
+    }
+
+    @Override
+    public List<Room> findAllPerPage(int page, Search search) {
+        return roomDAO.findAllPerPage(page, search);
+    }
+
+    @Override
+    public int totalPages(Search search) {
+        return roomDAO.totalPages(search);
+    }
+
+
 }

@@ -12,6 +12,9 @@ public interface RoomService {
     Room findById(int id);
     Boolean update(Room room);
     void delete(int id);
-//    int totalElement(Search search);
-//    List<Room> findAll(int page,Search search);
+
+    Double maxPrice();
+    int totalElement(Search search);
+    List<Room> findAllPerPage(int page,Search search);
+    int totalPages(Search search);
 }

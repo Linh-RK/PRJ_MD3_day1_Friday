@@ -246,69 +246,7 @@
                 <li><a href="#">Examples</a></li>
                 <li class="active">Blank page</li>
             </ol>
-            <!-- search form -->
 
-                <div class="form-group col-md-2">
-                    <div class="content-wrapper" style="min-height: 669px;">
-                        <form method="get" >
-                            <div class="form-group col-md-2">
-                                <label>Search</label>
-                                <input type="text"
-                                       class="form-control"
-                                       name="searchKey"
-                                       placeholder="Input keyword"
-                                       th:value="${searchKey}"
-                                >
-                            </div>
-
-                            <div class="form-group col-md-2">
-                                <label>Category</label>
-                                <select name="categoryId" class="form-control">
-                                    <option value="-1">All category</option>
-                                    <option th:each="cate : ${categories}" th:value="${cate.id}"
-                                            th:text="${cate.name}"
-                                            th:selected="${cate.id == categoryId}">
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-2">
-                                    <label >Price min</label>
-                                    <input type="number" class="form-control" th:value="${priceMin}" name="priceMin" placeholder="_VND">
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label >Price max</label>
-                                    <input type="number" class="form-control" th:value="${priceMax}" name="priceMax" placeholder="_VND">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label>Sort By</label>
-                                <select name="sort" class="form-control">
-                                    <option value="" th:selected="${sort}==''">No sorting</option>
-                                    <!--                    <option th:each="sort : ${sort}" th:value="${sort}" th:text="${sort}=='asc' ? 'Price: Low to High' : 'Price: High to Low'"></option>-->
-                                    <option  value="asc" th:selected="${sort}=='asc'">Price: Low to High</option>
-                                    <option  value="desc" th:selected="${sort}=='desc'">Price: High to Low</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-2">
-                                <label>Page Size</label>
-                                <select name="pageSize" class="form-control">
-                                    <option th:value="5" th:selected="${pageSize}=='5'">5</option>
-                                    <option th:value="10" th:selected="${pageSize}=='10'">10</option>
-                                    <option th:value="15" th:selected="${pageSize}=='15'">15</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary " >Search</button>
-                            <a href="/admin/book/add" class="btn btn-success ">ADD NEW BOOK</a>
-                        </form>
-                    </div>
-                </div>
-
-            <!-- /.search form -->
         </section>
 
         <!-- Main content -->
@@ -327,7 +265,82 @@
                     </div>
                 </div>
                 <div class="box-body">
+                    <!-- search form -->
 
+                    <div class="form-group row">
+                        <form method="get" th:object="${search}">
+                            <div class="form-group col-md-2">
+                                <label th:for="*{searchKey}">Search
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="Input keyword"
+                                           th:field ="*{searchKey}"
+                                    >
+                                </label>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="type">Type</label>
+                                <select class="form-control" th:field="*{roomType}" id="type">
+                                    <option th:selected="*{roomType == null}" value="">No sorting</option>
+                                    <option th:each="item : ${roomTypeList}"
+                                            th:value="${item}"
+                                            th:text="${item}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="status">Status</label>
+                                <select class="form-control" th:field="*{availabilityStatus}" id="status">
+                                    <option th:selected="*{availabilityStatus == null}" value="">No sorting</option>
+                                    <option th:each="status : ${availabilityStatusList}"
+                                            th:value="${status}"
+                                            th:text="${status}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-1">
+                                    <label >Price min
+                                        <input type="number" class="form-control" th:field="*{priceMin}" name="priceMin" placeholder="_VND">
+                                    </label>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label >Price max
+                                        <input type="number" class="form-control" th:field="*{priceMax}" name="priceMax" placeholder="_VND">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Sort By</label>
+                                <select th:field="*{sort}" class="form-control">
+                                    <option value="" th:selected="${sort} ==''">No sorting</option>
+                                    <option  value="asc" th:selected="${sort} =='ASC'">Price: Low to High</option>
+                                    <option  value="desc" th:selected="${sort} =='DESC'">Price: High to Low</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-1">
+                                <label>Page Size
+                                    <select th:field="*{pageSize}" class="form-control">
+                                        <option th:value="5" th:selected="*{5}">5</option>
+                                        <option th:value="10" th:selected="*{10}">10</option>
+                                        <option th:value="15" th:selected="*{15}">15</option>
+                                    </select>
+                                </label>
+                            </div>
+
+                            <div style="text-align: center">
+                                <button type="submit" class="btn btn-primary " >Search</button>
+
+                                <a href="/admin/room/add" class="btn btn-success ">ADD NEW BOOK</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- /.search form -->
                     <table class="table">
                         <thead>
                         <tr>
@@ -342,7 +355,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="room, loop : ${rooms}">
-                            <td scope="row" th:text="${loop.index + 1}"></td>
+                            <td scope="row" th:text="${loop.index + 1 + page*search.pageSize}"></td>
                             <td th:text="${room.roomId}"></td>
                             <td th:text="${room.roomNumber}"></td>
                             <td th:text="${room.roomType}"></td>
@@ -359,7 +372,27 @@
                         </tr>
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation" class="text-center">
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${page == 0 ? 'hidden':''}">
+                                <a class="page-link" th:href="@{'/admin/room?page=' + ${page - 1}}" aria-label="Previous" >
+                                    <label aria-hidden="true">&laquo;</label>
+                                    <label class="sr-only">Previous</label>
+                                </a>
+                            </li>
+                            <li class="page-item" th:each="i : ${#numbers.sequence(1,totalPages)}" th:classappend="${i == (page + 1) ? 'active':''}">
+                                <a class="page-link" th:href="@{'/admin/room?page=' + ${i - 1}}" th:text="${i}"></a>
+                            </li>
+                            <!--      <li class="page-item"><a class="page-link" href="#"></a></li>-->
 
+                            <li class="page-item" th:classappend="${page + 1 == totalPages ? 'hidden':''}">
+                                <a class="page-link"  th:href="@{'/admin/room?page=' + ${page + 1}}" aria-label="Next" >
+                                    <label aria-hidden="true">&raquo;</label>
+                                    <label class="sr-only">Next</label>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">

@@ -2,15 +2,24 @@ package com.ra.hotel_booking.model.dao.admin;
 
 import com.ra.hotel_booking.model.entity.Room;
 import com.ra.hotel_booking.model.entity.Search;
+import com.ra.hotel_booking.model.entity.constants.AvailabilityStatus;
+import com.ra.hotel_booking.model.entity.constants.RoomType;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class RoomDAOImpl implements RoomDAO {
@@ -82,42 +91,131 @@ public class RoomDAOImpl implements RoomDAO {
         }
     }
 
-//    @Override
-//    public int totalElement(Search search) {
-//        return 0;
-//    }
-//
-//    @Override
-//    public List<Room> findAll(int page, Search search) {
-//        return Collections.emptyList();
-//    }
-//    private List<Room> result(Search search) {
-//        try (Session session = sessionFactory.openSession()) {
-//            String hql = "select r from Room r where r.roomType like :searchKey and b.price between :priceMin and :priceMax ";
-//            if (categoryId != -1) {
-//                hql += " and b.category.id = :categoryId";
-//            }
-//            List<Room> bookList;
-//            if (categoryId != -1) {
-//                bookList = session.createQuery(hql, Room.class)
-//                        .setParameter("searchKey", "%" + searchKey + "%")
-//                        .setParameter("priceMin", priceMin)
-//                        .setParameter("priceMax", priceMax)
-//                        .setParameter("categoryId", categoryId)
-//                        .getResultList();
-//            }
-//            else
-//            {
-//                bookList = session.createQuery(hql, Room.class)
-//                        .setParameter("searchKey", "%" + searchKey + "%")
-//                        .setParameter("priceMin", priceMin)
-//                        .setParameter("priceMax", priceMax)
-//                        .getResultList();
-//            }
-//            return bookList;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return findAll();
-//    }
+    @Override
+    public int totalElement(Search search) {
+        System.out.println(result(search).size());
+        return result(search).size();
+    }
+
+    @Override
+    public List<Room> findAllPerPage(int page, Search search) {
+        List<Room> roomList;
+
+        try (Session session = sessionFactory.openSession()) {
+
+            String hql = "select r from Room r where r.description like :searchKey and r.pricePerNight between :priceMin and :priceMax";
+
+
+            if (search.getRoomType() != null) {
+                hql += " and r.roomType = :roomType";
+            }
+            if (search.getAvailabilityStatus() != null) {
+                hql += " and r.availabilityStatus = :availabilityStatus";
+            }
+
+
+            if (search.getSort() != null) {
+                hql += " order by r.pricePerNight " + search.getSort();
+            } else {
+                hql += " order by r.roomId";
+            }
+
+
+            Query<Room> query = session.createQuery(hql, Room.class)
+                    .setParameter("searchKey", "%" + search.getSearchKey() + "%")
+                    .setParameter("priceMin", search.getPriceMin())
+                    .setParameter("priceMax", search.getPriceMax());
+
+
+            if (search.getRoomType() != null) {
+                query.setParameter("roomType", search.getRoomType());
+            }
+            if (search.getAvailabilityStatus() != null) {
+                query.setParameter("availabilityStatus", search.getAvailabilityStatus());
+            }
+            System.out.println("HQL Query: " + hql);
+            System.out.println("Parameters: searchKey=" + search.getSearchKey() +
+                    ", priceMin=" + search.getPriceMin() +
+                    ", priceMax=" + search.getPriceMax() +
+                    ", roomType=" + search.getRoomType() +
+                    ", availabilityStatus=" + search.getAvailabilityStatus());
+
+            query.setFirstResult(page * search.getPageSize())
+                    .setMaxResults(search.getPageSize());
+
+            roomList = query.list();
+            System.out.println(roomList.size());
+            return roomList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return new ArrayList<>();
+    }
+
+
+    @Override
+    public int totalPages(Search search) {
+        int totalPages= (int) Math.ceil((double) (totalElement(search))/(double) (search.getPageSize()));
+        if (totalPages == 0){
+            return 1;
+        }
+        return totalPages;
+    }
+
+
+    private List<Room> result(Search search) {
+        List<Room> roomList;
+
+        try (Session session = sessionFactory.openSession()) {
+
+            String hql = "select r from Room r where r.description like :searchKey and r.pricePerNight between :priceMin and :priceMax";
+
+
+            if (search.getRoomType() != null) {
+                hql += " and r.roomType = :roomType";
+            }
+            if (search.getAvailabilityStatus() != null) {
+                hql += " and r.availabilityStatus = :availabilityStatus";
+            }
+
+
+            if (search.getSort() != null) {
+                hql += " order by r.pricePerNight " + search.getSort();
+            } else {
+                hql += " order by r.roomId";
+            }
+
+
+            Query<Room> query = session.createQuery(hql, Room.class)
+                    .setParameter("searchKey", "%" + search.getSearchKey() + "%")
+                    .setParameter("priceMin", search.getPriceMin())
+                    .setParameter("priceMax", search.getPriceMax());
+
+
+            if (search.getRoomType() != null) {
+                query.setParameter("roomType", search.getRoomType());
+            }
+            if (search.getAvailabilityStatus() != null) {
+                query.setParameter("availabilityStatus", search.getAvailabilityStatus());
+            }
+
+            System.out.println("HQL Query: " + hql);
+            System.out.println("Parameters: searchKey=" + search.getSearchKey() +
+                    ", priceMin=" + search.getPriceMin() +
+                    ", priceMax=" + search.getPriceMax() +
+                    ", roomType=" + search.getRoomType() +
+                    ", availabilityStatus=" + search.getAvailabilityStatus());
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        return new ArrayList<>();
+    }
+
+
 }
