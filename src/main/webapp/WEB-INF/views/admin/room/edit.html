@@ -97,7 +97,8 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <form th:action="@{|/admin/room/edit/${id}|}" method="post" th:object="${roomDTO}" enctype="multipart/form-data">
+                    <form th:action="@{|/admin/room/edit/${id}?page=${page}|}" method="post" th:object="${roomDTO}" enctype="multipart/form-data">
+                        <input type="hidden" name="page" value="${page}" />
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" th:field="*{roomNumber}" class="form-control" />
@@ -114,11 +115,11 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label>Price per night</label>
-                            <input type="text" th:field="*{pricePerNight}" class="form-control" />
-                            <small  class="form-text text-muted" style="color:red !important;" th:errors="*{pricePerNight}">Help text</small>
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <label>Price per night</label>-->
+<!--                            <input type="text" th:field="*{pricePerNight}" class="form-control" />-->
+<!--                            <small  class="form-text text-muted" style="color:red !important;" th:errors="*{pricePerNight}">Help text</small>-->
+<!--                        </div>-->
 
                         <div class="form-group">
                             <label class="form-label">Image</label>

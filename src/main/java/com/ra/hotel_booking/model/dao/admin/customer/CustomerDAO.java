@@ -1,4 +1,4 @@
-package com.ra.hotel_booking.model.dao;
+package com.ra.hotel_booking.model.dao.admin.customer;
 
 import com.ra.hotel_booking.model.entity.Customer;
 

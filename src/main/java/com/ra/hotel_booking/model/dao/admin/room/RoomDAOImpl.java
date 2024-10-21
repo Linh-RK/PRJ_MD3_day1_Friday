@@ -1,9 +1,7 @@
-package com.ra.hotel_booking.model.dao.admin;
+package com.ra.hotel_booking.model.dao.admin.room;
 
 import com.ra.hotel_booking.model.entity.Room;
 import com.ra.hotel_booking.model.entity.Search;
-import com.ra.hotel_booking.model.entity.constants.AvailabilityStatus;
-import com.ra.hotel_booking.model.entity.constants.RoomType;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,14 +10,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class RoomDAOImpl implements RoomDAO {
@@ -154,7 +146,6 @@ public class RoomDAOImpl implements RoomDAO {
         return new ArrayList<>();
     }
 
-
     @Override
     public int totalPages(Search search) {
         int totalPages= (int) Math.ceil((double) (totalElement(search))/(double) (search.getPageSize()));
@@ -164,6 +155,18 @@ public class RoomDAOImpl implements RoomDAO {
         return totalPages;
     }
 
+    @Override
+    public boolean existsByRoomNumber(Integer roomNumber) {
+        try (Session session = sessionFactory.openSession()) {
+            int count = session.createQuery("select count(r) from Room r where r.roomNumber = :roomNumber",int.class)
+                    .setParameter("roomNumber", roomNumber)
+                    .getSingleResult();
+            return count > 0;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     private List<Room> result(Search search) {
         List<Room> roomList;

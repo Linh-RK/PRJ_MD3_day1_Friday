@@ -15,6 +15,14 @@
     <link rel="stylesheet" th:href="@{/assets/admin/css/style.css}" />
     <script th:src="@{/assets/admin/js/angular.min.js}"></script>
     <script th:src="@{/assets/admin/js/app.js}"></script>
+    <style>
+        td {
+            white-space: nowrap;        /* Không xuống dòng */
+            overflow: hidden;           /* Ẩn phần văn bản tràn */
+            text-overflow: ellipsis;    /* Thêm dấu "..." vào cuối văn bản */
+            max-width: 150px;           /* Giới hạn chiều rộng của ô */
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -212,7 +220,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a th:href="@{/admin/index}"><i class="fa fa-circle-o"></i> Danh sách phòng</a></li>
+                        <li><a th:href="@{/admin/room}"><i class="fa fa-circle-o"></i> Danh sách phòng</a></li>
                         <li><a th:href="@{/admin/room/add}"><i class="fa fa-circle-o"></i> Thêm mới phòng</a></li>
                     </ul>
                 </li>
@@ -350,6 +358,8 @@
                             <th>Loại phòng</th>
                             <th>Giá mỗi đêm</th>
                             <th>Trạng thái phòng</th>
+                            <th>Ảnh</th>
+                            <th>Mô tả</th>
                             <th>Quản lý</th>
                         </tr>
                         </thead>
@@ -361,13 +371,13 @@
                             <td th:text="${room.roomType}"></td>
                             <td th:text="${room.pricePerNight}"></td>
                             <td th:text="${room.availabilityStatus}"></td>
-                            <td>
                             <td><img th:src="@{|/uploads/${room.image}|}"  alt="demo" width="100px"/></td>
-                            </td>
                             <td th:text="${room.description}"></td>
                             <td>
-                                <a th:href="@{/admin/room/edit/{id}(id=${room.roomId})}">EDIT</a>
-                                <a th:href="@{/admin/room/delete/{id}(id=${room.roomId})}">DELETE</a>
+                                <a th:href="@{/admin/room/edit/{id}(id=${room.roomId})}" class="btn btn-primary">EDIT</a>
+<!--                                <button th:attr="onclick='redirectToEdit(' + ${room.roomId} + ', ' + ${page} + ');'" type="button">Edit Room</button>-->
+
+                                <a th:href="@{/admin/room/delete/{id}(id=${room.roomId})}" class="btn btn-danger">DELETE</a>
                             </td>
                         </tr>
                         </tbody>
@@ -418,7 +428,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-
+<!--<th:block th:insert="admin/layout/script.html"></th:block>-->
 <script th:src="@{/assets/admin/js/jquery.min.js}"></script>
 <script th:src="@{/assets/admin/js/jquery-ui.js}"></script>
 <script th:src="@{/assets/admin/js/bootstrap.min.js}"></script>

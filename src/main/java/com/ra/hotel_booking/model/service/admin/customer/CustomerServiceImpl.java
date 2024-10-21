@@ -1,6 +1,6 @@
-package com.ra.hotel_booking.model.service;
+package com.ra.hotel_booking.model.service.admin.customer;
 
-import com.ra.hotel_booking.model.dao.CustomerDAO;
+import com.ra.hotel_booking.model.dao.admin.customer.CustomerDAO;
 import com.ra.hotel_booking.model.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

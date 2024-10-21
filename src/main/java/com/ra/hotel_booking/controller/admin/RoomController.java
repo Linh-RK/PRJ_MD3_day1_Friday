@@ -4,7 +4,7 @@ import com.ra.hotel_booking.model.entity.DTO.RoomDTO;
 import com.ra.hotel_booking.model.entity.Room;
 import com.ra.hotel_booking.model.entity.Search;
 import com.ra.hotel_booking.model.entity.constants.AvailabilityStatus;
-import com.ra.hotel_booking.model.entity.constants.RoomType;
+import com.ra.hotel_booking.model.entity.constants.RoomTypeName;
 import com.ra.hotel_booking.model.service.UploadFile.UploadFileService;
 import com.ra.hotel_booking.model.service.admin.room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -30,7 +28,7 @@ public class RoomController {
     public int page;
     public static String oldNameRoom = "";
     public int totalPages;
-    public static List<RoomType> roomTypeList = Arrays.asList(RoomType.values());
+    public static List<RoomTypeName> roomTypeList = Arrays.asList(RoomTypeName.values());
     public static List<AvailabilityStatus> availabilityStatusList = Arrays.asList(AvailabilityStatus.values());
 
     @GetMapping
@@ -39,9 +37,6 @@ public class RoomController {
                         Model model) {
         List<Room> roomList ;
 
-        if(search.getPriceMax() == null){
-            search.setPriceMax(roomService.maxPrice());
-        }
         if(search.getPriceMax() == null){
             search.setPriceMax(roomService.maxPrice());
         }
@@ -74,12 +69,14 @@ public class RoomController {
     ,BindingResult result,RedirectAttributes redirectAttributes) {
         if (result.hasErrors() || roomDTO.getImagedd().getSize() <= 0) {
             model.addAttribute("roomDTO", roomDTO);
-            redirectAttributes.addFlashAttribute("errImg", "Choose file !");
+//            redirectAttributes.addFlashAttribute("errImg", "Choose file !");
+            model.addAttribute("errImg","Choose file !" );
             model.addAttribute("roomTypeList", roomTypeList);
             model.addAttribute("availabilityStatusList", availabilityStatusList);
             return "/admin/room/add";
         }else {
-            if (roomService.create(roomDTO)) {
+            RoomDTO roomDTO1 = new RoomDTO(roomDTO.getRoomNumber(),roomDTO.getRoomType(),roomDTO.getAvailabilityStatus(),roomDTO.getDescription(),roomDTO.getImagedd());
+            if (roomService.create(roomDTO1)) {
                 return "redirect:/admin/room";
             }
             model.addAttribute("roomDTO", roomDTO);
@@ -91,14 +88,10 @@ public class RoomController {
     }
 //    --------------------------------------------------------------------------
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, Model model) {
+    public String edit(@PathVariable("id") Integer id,
+                       Model model) {
         Room room = roomService.findById(id);
-        RoomDTO roomDTO = new RoomDTO();
-        roomDTO.setRoomNumber(room.getRoomNumber());
-        roomDTO.setRoomType(room.getRoomType());
-        roomDTO.setAvailabilityStatus(room.getAvailabilityStatus());
-        roomDTO.setPricePerNight(room.getPricePerNight());
-        roomDTO.setDescription(room.getDescription());
+        RoomDTO roomDTO = new RoomDTO(room.getRoomNumber(), room.getRoomType(),room.getAvailabilityStatus(),room.getDescription());
         model.addAttribute("availabilityStatusList", availabilityStatusList);
         model.addAttribute("roomTypeList", roomTypeList);
         model.addAttribute("roomDTO", roomDTO );
@@ -114,7 +107,6 @@ public class RoomController {
                           Model model,
                           RedirectAttributes redirectAttributes) {
         if(result.hasErrors()) {
-            List<Room> categories = roomService.findAll();
             model.addAttribute("availabilityStatusList", availabilityStatusList);
             model.addAttribute("roomTypeList", roomTypeList);
             model.addAttribute("roomDTO", roomDTO );
@@ -128,6 +120,8 @@ public class RoomController {
         roomEntity.setRoomType(roomDTO.getRoomType());
         roomEntity.setAvailabilityStatus(roomDTO.getAvailabilityStatus());
         roomEntity.setPricePerNight(roomDTO.getPricePerNight());
+        roomEntity.setHouseRules(roomDTO.getHouseRules());
+        roomEntity.setAmenities(roomDTO.getAmenities());
         roomEntity.setDescription(roomDTO.getDescription());
         if (roomDTO.getImagedd().getSize()>0) {
             String bookImage = uploadFileService.uploadFile (roomDTO.getImagedd());

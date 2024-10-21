@@ -1,4 +1,4 @@
-package com.ra.hotel_booking.model.dao.admin;
+package com.ra.hotel_booking.model.dao.admin.room;
 
 import com.ra.hotel_booking.model.entity.Room;
 import com.ra.hotel_booking.model.entity.Search;
@@ -13,4 +13,5 @@ public interface RoomDAO {
     int totalElement(Search search);
     List<Room> findAllPerPage(int page,Search search);
     int totalPages(Search search);
+    boolean existsByRoomNumber(Integer roomNumber);
 }

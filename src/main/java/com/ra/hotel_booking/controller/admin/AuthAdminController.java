@@ -2,7 +2,7 @@ package com.ra.hotel_booking.controller.admin;
 
 import com.ra.hotel_booking.model.entity.Customer;
 import com.ra.hotel_booking.model.entity.constants.RoleName;
-import com.ra.hotel_booking.model.service.CustomerService;
+import com.ra.hotel_booking.model.service.admin.customer.CustomerService;
 import com.ra.hotel_booking.model.service.admin.room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
