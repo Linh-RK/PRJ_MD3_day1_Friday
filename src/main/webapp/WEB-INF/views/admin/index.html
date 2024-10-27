@@ -371,8 +371,13 @@
                             <td th:text="${room.roomType}"></td>
                             <td th:text="${room.pricePerNight}"></td>
                             <td th:text="${room.availabilityStatus}"></td>
-                            <td><img th:src="@{|/uploads/${room.image}|}"  alt="demo" width="100px"/></td>
+                            <td><img th:src="@{|/uploads/${room.imageTitle}|}" alt="img" width="50px"></td>
+<!--                            <td th:each="img : ${room.images}">-->
+<!--                                <img th:src="@{'/uploads/' + ${img.image}}" alt="Room Image" style="width:20px; height:auto;" />-->
+<!--                            </td>-->
+<!--                            <td><img th:src="@{|/uploads/${room.image}|}"  alt="demo" width="100px"/></td>-->
                             <td th:text="${room.description}"></td>
+
                             <td>
                                 <a th:href="@{/admin/room/edit/{id}(id=${room.roomId})}" class="btn btn-primary">EDIT</a>
 <!--                                <button th:attr="onclick='redirectToEdit(' + ${room.roomId} + ', ' + ${page} + ');'" type="button">Edit Room</button>-->

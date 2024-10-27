@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -26,7 +28,7 @@ public class RoomDTO {
 
     @NotNull(message = "số phòng không được để trống")
     @Min(value = 1, message = "Số phòng phải lớn hơn 0")
-    @Unique
+//    @Unique
     private Integer roomNumber;
 
     @Enumerated(EnumType.STRING)
@@ -41,22 +43,26 @@ public class RoomDTO {
     @NotBlank
     private String description;
 
+    private MultipartFile imageTitle;
 
-    private MultipartFile imagedd;
+    @Fetch(FetchMode.SUBSELECT)
+    private List<MultipartFile> imageList = new ArrayList<>();
 
+    @ElementCollection
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Integer> deleteImage;
     // Danh sách dịch vụ bổ sung (Extra Services)
     @ElementCollection
+    @Fetch(FetchMode.SUBSELECT)
     private List<ExtraService> extraServices;
 
     @ElementCollection
+    @Fetch(FetchMode.SUBSELECT)
     private List<String> amenities;
 
     @ElementCollection
+    @Fetch(FetchMode.SUBSELECT)
     private List<String> houseRules; // Thêm trường quy định nhà
-
-//    // Kế hoạch giá theo ngày (Pricing Plans)
-//    @ElementCollection
-//    private List<PricePlan> pricingPlans;
 
     // Chính sách hủy phòng (Cancellation)
     private String cancellationPolicy;
@@ -73,16 +79,19 @@ public class RoomDTO {
         this.amenities = setAmenitiesByRoomType(roomType);
         this.houseRules = setHouseRulesByRoomType(roomType);
     }
-    public RoomDTO(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description, MultipartFile image) {
+
+    public RoomDTO(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description, MultipartFile imageTitle,List<MultipartFile> imageList, List<String> deleteImage) {
         this.roomNumber = roomNumber;
         this.roomType = roomType;
         this.pricePerNight = setPricePerNightByRoomType(roomType);
         this.availabilityStatus = availabilityStatus;
         this.description = description;
-        this.imagedd = image;
+        this.imageTitle = imageTitle;
+        this.imageList = imageList;
         this.amenities = setAmenitiesByRoomType(roomType);
         this.houseRules = setHouseRulesByRoomType(roomType);
     }
+
     public void setTypeName(RoomTypeName roomType) {
         this.roomType = roomType;
         this.amenities = setAmenitiesByRoomType(roomType); // Cập nhật tiện nghi khi thay đổi loại phòng

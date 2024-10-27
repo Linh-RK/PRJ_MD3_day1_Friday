@@ -1,23 +1,32 @@
 package com.ra.hotel_booking.model.service.admin.room;
 
 import com.ra.hotel_booking.model.dao.admin.room.RoomDAO;
+import com.ra.hotel_booking.model.dao.admin.room.RoomImagesDAO;
 import com.ra.hotel_booking.model.entity.DTO.RoomDTO;
 import com.ra.hotel_booking.model.entity.Room;
+import com.ra.hotel_booking.model.entity.RoomImages;
 import com.ra.hotel_booking.model.entity.Search;
+import com.ra.hotel_booking.model.service.UploadFile.FileService;
 import com.ra.hotel_booking.model.service.UploadFile.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.io.File;
+import java.util.*;
 
 @Service
 public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomDAO roomDAO;
     @Autowired
+    private RoomImagesDAO roomImagesDAO;
+    @Autowired
     private UploadFileService uploadFileService;
+    @Autowired
+    private FileService fileService;
+    @Autowired
+    private RoomImagesService roomImagesService;
     @Override
     public List<Room> findAll() {
         return roomDAO.findAll();
@@ -25,23 +34,42 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Boolean create(RoomDTO roomDTO) {
-        String image = "";
-        if (roomDTO.getImagedd() != null) {
-            image = uploadFileService.uploadFile(roomDTO.getImagedd());
-            System.out.println(image);
+        //them moi room
+//        Room room = Room.builder()
+//                .roomNumber(roomDTO.getRoomNumber())
+//                .roomType(roomDTO.getRoomType())
+//                .pricePerNight(setPricePerNightByRoomType(roomDTO.getRoomType()))
+//                .availabilityStatus(roomDTO.getAvailabilityStatus())
+//                .description(roomDTO.getDescription())
+//                .build();
+        Room room = new Room
+                (roomDTO.getRoomNumber(),roomDTO.getRoomType(),
+                roomDTO.getAvailabilityStatus(),roomDTO.getDescription(),
+                uploadFileService.uploadFile(roomDTO.getImageTitle()));
+        System.out.println(room.getRoomType());
+
+        int id = roomDAO.create(room);
+        if(id<0){
+            return false;
         }
-//        upload file
-//        convert
-        Room roomEntity = new Room();
-        roomEntity.setRoomNumber(roomDTO.getRoomNumber());
-        roomEntity.setRoomType(roomDTO.getRoomType());
-        roomEntity.setPricePerNight(roomDTO.getPricePerNight());
-        roomEntity.setAvailabilityStatus(roomDTO.getAvailabilityStatus());
-        roomEntity.setImage(image);
-        roomEntity.setAmenities(roomDTO.getAmenities());
-        roomEntity.setHouseRules(roomDTO.getHouseRules());
-        roomEntity.setDescription(roomDTO.getDescription());
-        return roomDAO.create(roomEntity);
+        System.out.println(id);
+        List<RoomImages> roomImagesList = new ArrayList<>();
+        List<String> imagesDisplay = new ArrayList<>();
+        for (MultipartFile file : roomDTO.getImageList()) {
+            if (!file.isEmpty()) {
+                String imageName = uploadFileService.uploadFile(file);  // Lưu file và trả về URL
+                RoomImages roomImage= RoomImages.builder()
+                        .room(roomDAO.findById(id))
+                        .image(imageName)
+                        .build();
+                roomImagesList.add(roomImage);
+                roomImagesDAO.add(roomImage);
+
+                imagesDisplay.add(imageName);
+            }
+        }
+       // chay vong lap
+        return true;
     }
     @Override
     public Room findById(int id) {
@@ -49,9 +77,48 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Boolean update(Room room) {
+    public Boolean update(RoomDTO roomDTO,int roomId) {
+    Room room = roomDAO.findById(roomId);
+    if(!roomDTO.getDeleteImage().isEmpty()){
+//         Xóa các ảnh đã chọn
+        for (Integer imageId : roomDTO.getDeleteImage()) {
+            roomImagesDAO.delete(imageId);
+        }
+    }
+        List<RoomImages> roomImagesList = room.getImages();
+        if(!roomDTO.getImageList().isEmpty()){
+           // Thêm các ảnh mới
+           List<String> imagesDisplay = new ArrayList<>();
+           for (MultipartFile file : roomDTO.getImageList()) {
+               if (!file.isEmpty()) {
+                   String imageName = uploadFileService.uploadFile(file);  // Lưu file và trả về URL
+                   RoomImages roomImage= RoomImages.builder()
+                           .room(roomDAO.findById(roomId))
+                           .image(imageName)
+                           .build();
+                   roomImagesList.add(roomImage);
+                   roomImagesDAO.add(roomImage);
+//                   imagesDisplay.add(imageName);
+               }
+           }
+        }
 
+RoomDTO roomDTO1 = new RoomDTO(roomDTO.getRoomNumber(), roomDTO.getRoomType(),roomDTO.getAvailabilityStatus(), roomDTO.getDescription());
+    room.setImages(roomImagesList);
+
+    room.setRoomNumber(roomDTO.getRoomNumber());
+    room.setRoomType(roomDTO.getRoomType());
+    room.setAvailabilityStatus(roomDTO.getAvailabilityStatus());
+    room.setDescription(roomDTO.getDescription());
+    room.setPricePerNight(roomDTO1.getPricePerNight());
+    room.setAmenities(roomDTO1.getAmenities());
+    room.setHouseRules(roomDTO1.getHouseRules());
+    if(!Objects.requireNonNull(roomDTO.getImageTitle().getOriginalFilename()).isEmpty()){
+        String imageTitle = uploadFileService.uploadFile(roomDTO.getImageTitle());
+        room.setImageTitle(imageTitle);
+    }
         return roomDAO.update(room);
+//        return true;
     }
 
     @Override

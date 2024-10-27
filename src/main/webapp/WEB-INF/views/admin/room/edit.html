@@ -77,8 +77,8 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Blank page
-                <small>DANH MUC SAN PHAM</small>
+                HOTEL-BOOKING
+                <small>QUẢN LÝ PHÒNG</small>
             </h1>
         </section>
         <!-- Main content -->
@@ -97,8 +97,8 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <form th:action="@{|/admin/room/edit/${id}?page=${page}|}" method="post" th:object="${roomDTO}" enctype="multipart/form-data">
-                        <input type="hidden" name="page" value="${page}" />
+                    <form th:action="@{|/admin/room/edit/${id}}" method="post" th:object="${roomDTO}" enctype="multipart/form-data">
+
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" th:field="*{roomNumber}" class="form-control" />
@@ -115,19 +115,67 @@
                             </select>
                         </div>
 
+
+                        <!-- Upload ảnh chính (Image Title) -->
+                        <div class="form-group">
+                            <label class="form-label">Image Title</label>
+                            <input type="file" class="form-control" th:field="*{imageTitle}"  accept="image/*"
+                                   onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                            <!-- Hiển thị ảnh hiện tại -->
+                            <img th:src="@{|/uploads/${room.imageTitle}|}" width="100px" id="output" >
+                            <small class="form-text text-muted" style="color:red !important;"
+                                   th:if="${errImg != null}" th:text="${errImg}"  th:class="text-danger"></small><br>
+                        </div>
+
+                        <!-- Thêm nhiều ảnh mới -->
+                        <div class="form-group">
+                            <label >Add New Images</label>
+<!--                            <input type="file" class="form-control-file" name="newImages" accept="image/*" multiple>-->
+                            <input type="file" class="form-control-file" th:field="*{imageList}" accept="image/*" multiple>
+                        </div>
+
+                        <!-- Hiển thị ảnh hiện tại và checkbox để xóa ảnh -->
+                        <div class="form-group">
+                            <label>Current Images</label>
+                            <div>
+                            <div th:each="image, loop : ${room.images}">
+<!--                                <span style="display: inline-block; margin-right: 10px;">-->
+<!--                                    <img th:src="@{|/uploads/${image.image}|}" alt="Room Image" style="width:100px;">-->
+<!--                                    &lt;!&ndash; Checkbox để chọn ảnh cần xóa &ndash;&gt;-->
+<!--&lt;!&ndash;                                    <input type="checkbox" th:field="*{deleteImage}" th:value="${image.id}"/> Delete&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <span th:text="${image.id}"></span>&ndash;&gt;-->
+<!--                                </span>-->
+<!--                                <span th:text="${image.id}"></span>-->
+                                <img th:src="@{|/uploads/${image.image}|}" alt="Room Image" style="width:100px;">
+                                <label>
+                                    <input type="checkbox" th:field="*{deleteImage}" th:value="${image.id}"/>
+                                </label> Delete
+                            </div>
+                            </div>
+                        </div>
 <!--                        <div class="form-group">-->
-<!--                            <label>Price per night</label>-->
-<!--                            <input type="text" th:field="*{pricePerNight}" class="form-control" />-->
-<!--                            <small  class="form-text text-muted" style="color:red !important;" th:errors="*{pricePerNight}">Help text</small>-->
+<!--                            <label class="form-label">Image Title</label>-->
+<!--                            <input type="file" class="form-control" th:field="*{imageTitle}" name="img" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">-->
+<!--                            <img th:src="@{|/uploads/${room.imageTitle}|}" width="100px" id="output" >-->
+<!--                            <small  class="form-text text-muted" style="color:red !important;"-->
+<!--                                    th:if="${errImg != null}" th:text="${errImg}"  th:class="text-danger"></small><br>-->
 <!--                        </div>-->
 
-                        <div class="form-group">
-                            <label class="form-label">Image</label>
-                            <input type="file" class="form-control" th:field="*{imagedd}" name="img" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
-                            <img th:src="@{|/uploads/${room.image}|}" width="150px" id="output" >
-                            <small  class="form-text text-muted" style="color:red !important;"
-                                    th:if="${errImg != null}" th:text="${errImg}"  th:class="text-danger"></small>
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <div>Add new</div>-->
+<!--                            <label>Image Detail</label>-->
+<!--                            <input type="file" class="form-control-file" name="newImages" th:field="*{imageList}" multiple="multiple"/>-->
+<!--                            <div>Current Images</div>-->
+<!--                            <span th:each="image, iterStat : ${room.images}">-->
+<!--                                <span>-->
+<!--                                    <img th:src="@{|/uploads/${image.image}|}" alt="Room Image" style="width:100px;">-->
+<!--                                    <input type="checkbox" th:field="*{deleteImage}" th:value="${image.image}"/> Delete-->
+<!--                                </span>-->
+<!--                            </span>-->
+
+<!--                            <small  class="form-text text-muted" style="color:red !important;"-->
+<!--                                    th:if="${errImg != null}" th:text="${errImg}"  th:class="text-danger"></small>-->
+<!--                        </div>-->
 
                         <div class="form-group">
                             <label>Description</label>

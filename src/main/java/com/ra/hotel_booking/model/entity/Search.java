@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Search {
     private String searchKey = "";
-    private int pageSize = 5;
+    private int pageSize = 6;
     private RoomTypeName roomType = null;
     private AvailabilityStatus availabilityStatus = null;
     private String sort = null;

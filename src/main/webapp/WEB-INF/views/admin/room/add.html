@@ -56,7 +56,6 @@
                                 </option>
                             </select>
                         </div>
-
 <!--                        <div class="form-group">-->
 <!--                            <label>Price per night</label>-->
 <!--                            <input type="text" th:field="*{pricePerNight}" class="form-control" />-->
@@ -64,8 +63,16 @@
 <!--                        </div>-->
 
                         <div class="form-group">
+                            <label>Image Title</label>
+                            <input type="file" class="form-control-file" th:field="*{imageTitle}" />
+                            <small  class="form-text text-muted" style="color:red !important;"
+                                    th:if="${errImg != null}" th:text="${errImg}"  th:class="text-danger"></small>
+                        </div>
+
+
+                        <div class="form-group">
                             <label>Image</label>
-                            <input type="file" class="form-control-file" th:field="*{imagedd}" />
+                            <input type="file" class="form-control-file" th:field="*{imageList}" multiple="multiple"/>
                             <small  class="form-text text-muted" style="color:red !important;"
                                     th:if="${errImg != null}" th:text="${errImg}"  th:class="text-danger"></small>
                         </div>

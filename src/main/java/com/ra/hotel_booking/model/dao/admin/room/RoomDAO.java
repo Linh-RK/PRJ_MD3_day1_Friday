@@ -6,7 +6,7 @@ import com.ra.hotel_booking.model.entity.Search;
 import java.util.List;
 public interface RoomDAO {
     List<Room> findAll();
-    Boolean create(Room room);
+    Integer create(Room room);
     Room findById(int id);
     Boolean update(Room room);
     void delete(int id);
@@ -14,4 +14,5 @@ public interface RoomDAO {
     List<Room> findAllPerPage(int page,Search search);
     int totalPages(Search search);
     boolean existsByRoomNumber(Integer roomNumber);
+//    List<String> amenitiesById(Integer roomNumber);
 }

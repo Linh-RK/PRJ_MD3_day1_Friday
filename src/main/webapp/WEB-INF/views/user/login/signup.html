@@ -37,11 +37,11 @@
         <div class="row login-box">
             <div class="col-lg-6 align-self-center form-section">
                 <div class="form-inner">
-                    <a href="index.html" class="logo">
-                        <img src="img/logos/logo.png" alt="logo">
+                    <a th:href="@{/user/index}" class="logo">
+                        <img th:src="@{/assets/user/img/logos/logo.png}" alt="logo">
                     </a>
                     <h3>Create an account</h3>
-                    <form action="#" method="GET">
+                    <form th:action="@{/user/register}" method="GET">
                         <div class="form-group clearfix">
                             <input name="name" type="text" class="form-control" placeholder="Full Name" aria-label="Full Name">
                         </div>

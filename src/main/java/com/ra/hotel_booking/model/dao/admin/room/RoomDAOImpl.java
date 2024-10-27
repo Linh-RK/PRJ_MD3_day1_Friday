@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -29,20 +30,21 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public Boolean create(Room room) {
+    public Integer create(Room room) {
        Transaction tx = null;
-        try( Session session = sessionFactory.openSession()){
+
+        try(Session session = sessionFactory.openSession()){
             tx= session.beginTransaction();
             session.save(room);
             tx.commit();
-            return true;
+            return room.getRoomId();
         }catch (Exception e) {
             if(tx!=null){
                 tx.rollback();
             }
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -78,8 +80,8 @@ public class RoomDAOImpl implements RoomDAO {
             session.delete(session.get(Room.class, id));
             tx.commit();
         }catch (Exception e) {
-            e.printStackTrace();
             tx.rollback();
+            e.printStackTrace();
         }
     }
 
@@ -158,7 +160,7 @@ public class RoomDAOImpl implements RoomDAO {
     @Override
     public boolean existsByRoomNumber(Integer roomNumber) {
         try (Session session = sessionFactory.openSession()) {
-            int count = session.createQuery("select count(r) from Room r where r.roomNumber = :roomNumber",int.class)
+            long count = session.createQuery("select count(r) from Room r where r.roomNumber = :roomNumber",int.class)
                     .setParameter("roomNumber", roomNumber)
                     .getSingleResult();
             return count > 0;
@@ -167,6 +169,16 @@ public class RoomDAOImpl implements RoomDAO {
         }
         return false;
     }
+
+//    @Override
+//    public List<String> amenitiesById(Integer id) {
+//        try (Session session = sessionFactory.openSession()) {
+//            Query<Room> query = session.createQuery("Select r from Room_amenities r where ", Room.class)
+//                    .setParameter("searchKey", "%" + search.getSearchKey() + "%")
+//                    .setParameter("priceMin", search.getPriceMin())
+//                    .setParameter("priceMax", search.getPriceMax());
+//        }
+//    }
 
     private List<Room> result(Search search) {
         List<Room> roomList;
@@ -189,7 +201,6 @@ public class RoomDAOImpl implements RoomDAO {
             } else {
                 hql += " order by r.roomId";
             }
-
 
             Query<Room> query = session.createQuery(hql, Room.class)
                     .setParameter("searchKey", "%" + search.getSearchKey() + "%")
@@ -219,6 +230,4 @@ public class RoomDAOImpl implements RoomDAO {
 
         return new ArrayList<>();
     }
-
-
 }

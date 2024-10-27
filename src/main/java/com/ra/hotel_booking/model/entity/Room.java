@@ -2,19 +2,20 @@ package com.ra.hotel_booking.model.entity;
 
 import com.ra.hotel_booking.model.entity.constants.AvailabilityStatus;
 import com.ra.hotel_booking.model.entity.constants.RoomTypeName;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "rooms")
 public class Room {
     @Id
@@ -26,6 +27,7 @@ public class Room {
     private Integer roomNumber;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "room_type")
     private RoomTypeName roomType;
 
     @Column(name = "price_per_night")
@@ -38,43 +40,41 @@ public class Room {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "image")
-    private String image;
+   @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+   @Fetch(FetchMode.SUBSELECT)
+   private List<RoomImages> images = new ArrayList<>();
 
-    // Danh sách dịch vụ bổ sung (Extra Services)
-    @ElementCollection
-    private List<ExtraService> extraServices;
+//    @ElementCollection
+//    private List<String> imagesDisplay ;
+    private  String imageTitle;
 
-    @ElementCollection
+//    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<RoomAmentities> roomAmenities;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<String> amenities;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<String> houseRules; // Thêm trường quy định nhà
-
-//    // Kế hoạch giá theo ngày (Pricing Plans)
-//    @ElementCollection
-//    private List<PricePlan> pricingPlans;
-
-    // Chính sách hủy phòng (Cancellation)
-    private String cancellationPolicy;
-
-    // Danh sách đánh giá phòng (Room Reviews)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews;
 
     public Room() {
     }
 
-    public Room(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description, String image) {
+    public Room(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description, String imageTitle) {
         this.roomNumber = roomNumber;
         this.roomType = roomType;
         this.pricePerNight = setPricePerNightByRoomType(roomType);
         this.availabilityStatus = availabilityStatus;
         this.description = description;
-        this.image = image;
         this.amenities = setAmenitiesByRoomType(roomType);
         this.houseRules = setHouseRulesByRoomType(roomType);
+        this.imageTitle = imageTitle;
+
     }
+
+
     public void setTypeName(RoomTypeName roomType) {
         this.roomType = roomType;
         this.amenities = setAmenitiesByRoomType(roomType); // Cập nhật tiện nghi khi thay đổi loại phòng

@@ -1,16 +1,34 @@
 package com.ra.hotel_booking.controller.user;
 
+import com.ra.hotel_booking.model.entity.Room;
+import com.ra.hotel_booking.model.entity.RoomImages;
+import com.ra.hotel_booking.model.entity.Search;
+import com.ra.hotel_booking.model.entity.constants.AvailabilityStatus;
+import com.ra.hotel_booking.model.entity.constants.RoomTypeName;
+import com.ra.hotel_booking.model.service.UploadFile.UploadFileService;
+import com.ra.hotel_booking.model.service.admin.room.RoomImagesService;
+import com.ra.hotel_booking.model.service.admin.room.RoomService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
+    private RoomService roomService;
+
+    @Autowired
+    private RoomImagesService roomImagesService;
     //user HOME
     @GetMapping("/index")
     public String home(Model model) {
+        model.addAttribute("rooms", roomService.findAll());
         return "/index";
     }
     // 1 user login
@@ -82,14 +100,56 @@ public class UserController {
     }
 
     //  14 user
+    public int page;
+    public static String oldNameRoom = "";
+    public int totalPages;
+    public static List<RoomTypeName> roomTypeList = Arrays.asList(RoomTypeName.values());
+    public static List<AvailabilityStatus> availabilityStatusList = Arrays.asList(AvailabilityStatus.values());
     @GetMapping("/rooms-col-2")
-    public String room(Model model) {
+    public String index(@ModelAttribute("search") Search search,
+                        @ModelAttribute("roomImages") RoomImages roomImages,
+                        @RequestParam(name = "page", defaultValue = "0") int page,
+                        Model model) {
+        List<Room> roomList;
+
+        if (search.getPriceMax() == null) {
+            search.setPriceMax(roomService.maxPrice());
+        }
+        if (search.getPriceMax() == null) {
+            search.setPriceMax(roomService.maxPrice());
+        }
+        int totalPages = roomService.totalPages(search);
+
+        if (page + 1 > totalPages || page < 0) {
+            page = totalPages - 1;
+        }
+
+        roomList = roomService.findAllPerPage(page, search);
+        model.addAttribute("roomImages", roomImages);
+        model.addAttribute("rooms", roomList);
+        model.addAttribute("search", search);
+        model.addAttribute("page", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("roomTypeList", roomTypeList);
+        model.addAttribute("availabilityStatusList", availabilityStatusList);
         return "/user/rooms-col-2";
+
     }
 
     //  15 user
-    @GetMapping("/rooms-details")
-    public String roomDetails(Model model) {
+
+    @GetMapping("/rooms-details/{id}")
+    public String roomDetails(Model model,
+                               @PathVariable("id") int roomId) {
+        Room room = roomService.findById(roomId);
+        List<String> amenities = room.getAmenities();
+                model.addAttribute("room", room);
+        model.addAttribute("id", roomId);
+        model.addAttribute("amenities", amenities);
+        for (int i = 0; i < amenities.size(); i++) {
+            System.out.println(room.getAmenities().get(i));
+        }
+//        return "/0_test";
         return "/user/rooms-details";
     }
     //  16 user
@@ -102,4 +162,5 @@ public class UserController {
     public String typography(Model model) {
         return "/user/typography";
     }
+
 }
