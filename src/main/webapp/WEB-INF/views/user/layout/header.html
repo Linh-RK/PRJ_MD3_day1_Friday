@@ -26,14 +26,14 @@
                                 aria-haspopup="true"
                                 aria-expanded="false"
                         >
-                            Index
+                            Home
                         </a>
                         <ul
                                 class="dropdown-menu"
                                 aria-labelledby="navbarDropdownMenuLink"
                         >
                             <li>
-                                <a class="dropdown-item" th:href="@{/user/index}">Index 1</a>
+                                <a class="dropdown-item" th:href="@{/user/index}">Home</a>
                             </li>
                         </ul>
                     </li>
@@ -57,13 +57,18 @@
                                 >Rooms 2 Column</a
                                 >
                             </li>
-                            <li>
-                                <a class="dropdown-item" th:href="@{/user/rooms-details}"
-                                >Rooms Details 1</a
-                                >
-                            </li>
                         </ul>
                     </li>
+
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Order
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/user/order-history}">Order history</a></li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a
                                 class="nav-link dropdown-toggle"

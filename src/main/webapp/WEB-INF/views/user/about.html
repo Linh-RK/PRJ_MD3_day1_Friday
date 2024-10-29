@@ -73,14 +73,14 @@
                                 aria-haspopup="true"
                                 aria-expanded="false"
                         >
-                            Index
+                            HOME
                         </a>
                         <ul
                                 class="dropdown-menu"
                                 aria-labelledby="navbarDropdownMenuLink"
                         >
                             <li>
-                                <a class="dropdown-item" th:href="@{/user/index}">Index 1</a>
+                                <a class="dropdown-item" th:href="@{/user/index}">Home</a>
                             </li>
                         </ul>
                     </li>
@@ -111,6 +111,15 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Order
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/user/order-history}">Order history</a></li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a
                                 class="nav-link dropdown-toggle"
@@ -178,7 +187,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li>
+                            <li class="nav-item ">
                                 <a class="dropdown-item" th:href="@{/user/pricing-tables}"
                                 >Pricing Tables</a
                                 >

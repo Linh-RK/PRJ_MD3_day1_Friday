@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="zxx"  xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
 
 <!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/rooms-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:53 GMT -->
 
@@ -41,7 +42,7 @@
 
 
     <script  th:src="@{/assets2/user/js/ie-emulation-modes-warning.js}"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <body>
@@ -691,67 +692,64 @@
                     <!-- Search area box 3 start -->
                     <div class="sidebar-widget search-area-box-3 clearfix">
                         <h3>Check Availability</h3>
-                        <h4 class="price">$260/Night</h4>
+                        <h4 class="price" th:text="${room.pricePerNight}"></h4>
                         <div class="search-contents">
-                            <form method="GET">
+                            <form method="POST" th:object="${searchBooking}" th:action="@{/user/booking-step2}">
                                 <div class="search-your-details">
                                     <div class="row">
+                                        <input type="hidden" name="roomId" th:value="${room.roomId}">
                                         <div class="col-md-12 col-sm-6">
-                                            <div class="form-group">
-                                                <input type="text" class="btn-default datepicker" placeholder="Check In">
+                                            <div class="form-group clearfix ">
+                                                <input type="date" th:field="*{startDate}" id="startDate" class="btn-default  clearfix" placeholder="Check In">
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-sm-6">
+                                            <div class="form-group clearfix">
+                                                <input type="date" th:field="*{endDate}" id="endDate" class="btn-default  clearfix" placeholder="Check Out">
+                                            </div>
+                                        </div>
+                                        <div th:if="${errDate}" class="alert alert-danger" role="alert">
+                                            <span th:text="${errDate}"></span>
+                                        </div>
+                                        <div id="error-message" style="color: red;"></div>
+                                        <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="btn-default datepicker" placeholder="Check Out">
+                                                <div class="dropdown bootstrap-select search-fields">
+                                                    <label th:for="*{roomType}">Room type</label>
+
+                                                    <select class="form-control" th:field="*{roomType}" id="type">
+                                                        <option th:selected="*{roomType == null}" value="">Room</option>
+                                                        <option th:each="item : ${roomTypeList}"
+                                                                th:value="${item}"
+                                                                th:text="${item}">
+                                                        </option>
+                                                    </select>
+
+                                                    <button type="button" tabindex="-1" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox" aria-expanded="false" title="Room"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Room</div></div> </div></button><div class="dropdown-menu "><div class="inner show" role="listbox" id="bs-select-1" tabindex="-1"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="dropdown bootstrap-select search-fields">
+                                                    <label th:for="*{adults}">Adult</label>
+                                                    <input type="text" th:field="*{adults}" class="btn-default clearfix" placeholder="Adults">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
-                                                <select class="selectpicker search-fields" name="room">
-                                                    <option>Room</option>
-                                                    <option>Single Room</option>
-                                                    <option>Double Room</option>
-                                                    <option>Deluxe Room</option>
-                                                </select>
+                                                <div class="dropdown bootstrap-select search-fields">
+                                                    <label th:for="*{children}">Children</label>
+                                                    <input type="text" th:field="*{children}" class="btn-default clearfix" placeholder="Children">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="form-group">
-                                                <select class="selectpicker search-fields" name="beds">
-                                                    <option>Beds</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
+
+                                        <div th:if="${err}" class="alert alert-danger" role="alert">
+                                            <span th:text="${err}"></span>
                                         </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="form-group">
-                                                <select class="selectpicker search-fields" name="adults">
-                                                    <option>Adult</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="form-group">
-                                                <select class="selectpicker search-fields" name="children">
-                                                    <option>Child</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
                                         <div class="col-md-12 col-sm-12">
                                             <div class="form-group mb-0">
                                                 <button type="submit" class="btn-md btn-theme btn-4 btn-7 w-100">Book Now</button>
@@ -762,6 +760,7 @@
                             </form>
                         </div>
                     </div>
+
                     <!-- Recent News start -->
                     <div class="sidebar-widget recent-news">
                         <div class="main-title-2">
@@ -924,6 +923,44 @@
 <th:block th:insert="/user/layout/js.html"></th:block>
 
 <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4omYJlOaP814WDcCG8eubXcbhB-44Uac"></script>
+
+<script type="text/javascript">
+    $(function() {
+        const dtToday = new Date();
+        let month = dtToday.getMonth() + 1;
+        let day = dtToday.getDate();
+        let year = dtToday.getFullYear();
+
+        if (month < 10) month = '0' + month.toString();
+        if (day < 10) day = '0' + day.toString();
+
+        let maxDate = year + '-' + month + '-' + day;
+
+        $('#startDate').attr('min', maxDate);
+        $('#endDate').attr('min', maxDate);
+    });
+</script>
+
+<script type="text/javascript">
+    document.getElementById('bookingForm').addEventListener('submit', function(event) {
+        const startDate = new Date(document.getElementById('startDate').value);
+        const endDate = new Date(document.getElementById('endDate').value);
+        const errorMessageDiv = document.getElementById('error-message');
+
+        // Reset error message
+        errorMessageDiv.textContent = '';
+
+        // Kiểm tra nếu ngày check-in lớn hơn hoặc bằng ngày check-out
+        if (startDate >= endDate) {
+            event.preventDefault(); // Ngăn chặn gửi form
+            errorMessageDiv.textContent = 'Ngày check-in phải lớn hơn ngày check-out.';
+        }
+    });
+</script>
+
+
+
+
 <script>
     function LoadMap(propertes) {
         var defaultLat = 40.7110411;

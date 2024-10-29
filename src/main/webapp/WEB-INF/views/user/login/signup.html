@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:55 GMT -->
 <th:block th:insert="/user/layout/head.html"></th:block>
@@ -41,16 +41,32 @@
                         <img th:src="@{/assets/user/img/logos/logo.png}" alt="logo">
                     </a>
                     <h3>Create an account</h3>
-                    <form th:action="@{/user/register}" method="GET">
+<!--                   FORM -------------------->
+                    <form th:action="@{/user/signup}" th:object="${customer}" method="post" >
+
                         <div class="form-group clearfix">
-                            <input name="name" type="text" class="form-control" placeholder="Full Name" aria-label="Full Name">
+                            <input th:field="*{first_name}" type="text" class="form-control" placeholder="Full Name" aria-label="Full Name">
                         </div>
                         <div class="form-group clearfix">
-                            <input name="email" type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                            <input th:field="*{last_name}" type="text" class="form-control" placeholder="Full Name" aria-label="Full Name">
                         </div>
                         <div class="form-group clearfix">
-                            <input name="password" type="password" class="form-control" placeholder="Password" aria-label="Password">
+                            <input th:field="*{email}" type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
                         </div>
+                        <div class="form-group clearfix">
+                            <input th:field="*{phone}" type="text" class="form-control" placeholder="Phone number" aria-label="Phone number">
+                        </div>
+                        <div class="form-group clearfix has-feedback">
+                            <input type="password" class="form-control" id="password" placeholder="Password" th:field = "*{password}">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+
+                        <div class="form-group clearfix has-feedback">
+                            <input type="password" class="form-control" id="retypePassword" placeholder="Retype password" onkeyup="validatePassword()">
+                            <div id="passwordError" class="error"></div>
+                            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                        </div>
+
                         <div class="form-group checkbox clearfix">
                             <div class="form-check checkbox-theme float-start">
                                 <input class="form-check-input" type="checkbox" id="agree">
@@ -66,6 +82,7 @@
                             <span>Or Login With</span>
                         </div>
                     </form>
+<!--                    ------------------>
                     <div class="clearfix"></div>
                     <div class="social-list">
                         <a href="#" class="facebook-bg">
@@ -94,7 +111,25 @@
     </div>
 </div>
 <!-- Login section end -->
+<script>
+    function validatePassword() {
+        // Lấy giá trị từ 2 trường password và retype password
+        var password = document.getElementById('password').value;
+        var retypePassword = document.getElementById('retypePassword').value;
 
+        // Lấy phần tử thông báo lỗi
+        var errorDiv = document.getElementById('passwordError');
+
+        // Kiểm tra tính khớp của mật khẩu
+        if (password !== retypePassword) {
+            errorDiv.textContent = 'Passwords do not match!';
+            return false; // Ngăn chặn submit nếu mật khẩu không khớp
+        }
+
+        errorDiv.textContent = ''; // Nếu khớp, xóa thông báo lỗi
+        return true;
+    }
+</script>
 <th:block th:insert="/user/layout/js.html"></th:block>
 
 </body>

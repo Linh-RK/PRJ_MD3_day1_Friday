@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/events.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:55 GMT -->
+<th:block th:insert="/user/layout/head.html" ></th:block>
+<body>
+<th:block th:insert="/user/layout/top.html" ></th:block>
+
+<!-- Order history 2 start -->
+<div class="box-body">
+
+    <!-- search form -->
+    <div class="form-group row">
+        <form method="get" th:object="${searchBookingDetail}">
+            <div class="form-group col-md-6">
+                <label th:for="*{searchKey}">Search
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Input keyword"
+                           th:field ="*{searchKey}"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="type">Type</label>
+                <select class="form-control" th:field="*{bookingStatus}" id="type">
+                    <option th:selected="*{bookingStatus == null}" value="">No sorting</option>
+                    <option th:each="item : ${bookingStatusList}"
+                            th:value="${item}"
+                            th:text="${item}">
+                    </option>
+                </select>
+            </div>
+
+            <div style="text-align: center">
+                <button type="submit" class="btn btn-primary " >Search</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.search form -->
+
+    <!-- /.table form -->
+    <div class="events-secion-2 content-area">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='id', sortDir=${reverseSortDir})}">STT</a>
+                </th>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='checkIn', sortDir=${reverseSortDir})}">Check in</a>
+
+                </th>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='checkOut', sortDir=${reverseSortDir})}">Check out</a>
+
+                </th>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='customer.firstName', sortDir=${reverseSortDir})}">Customer</a>
+
+                </th>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='room.roomNumber', sortDir=${reverseSortDir})}">Room Number</a>
+                </th>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='adults', sortDir=${reverseSortDir})}">Adults</a>
+                </th>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='children', sortDir=${reverseSortDir})}">Children</a>
+                </th>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='totalPrice', sortDir=${reverseSortDir})}">Total Price</a>
+                </th>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='bookingDate', sortDir=${reverseSortDir})}">Booking Date</a>
+                </th>
+                <th>
+                    <a th:href="@{/user/order-history(sortField='bookingStatus', sortDir=${reverseSortDir})}">Status</a>
+                </th>
+                <th>Update Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking, loop : ${bookings}">
+                <td scope="row" th:text="${loop.index + 1 + page*5}"></td>
+                <td th:text="${booking.checkIn}"></td>
+                <td th:text="${booking.checkOut}"></td>
+                <td th:text="${booking.customer.first_name + booking.customer.last_name}"></td>
+                <td th:text="${booking.room.roomNumber}"></td>
+                <td th:text="${booking.adults}"></td>
+                <td th:text="${booking.children}"></td>
+                <td th:text="${booking.totalPrice}"></td>
+                <td th:text="${booking.bookingDate}"></td>
+                <td th:text="${booking.bookingStatus}"></td>
+
+                <td>
+                    <!-- Hiển thị CANCEL nếu trạng thái là PENDING -->
+                    <a th:href="@{/user/order-history/cancel/{id}(id=${booking.getBookingId()})}" class="btn btn-danger"
+                       th:if="${booking.bookingStatus.name()== 'PENDING'}"
+                       th:text="'CANCEL'">
+                    </a>
+                </td>
+
+                <td>
+                    <!-- Hiển thị CANCEL nếu trạng thái là PENDING -->
+                    <a th:href="@{/user/order-history/delete/{id}(id=${booking.getBookingId()})}" class="btn btn-danger"
+                       th:if="${booking.bookingStatus.name()== 'PENDING'}"
+                       th:text="'DELETE'">
+                    </a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- /.table form -->
+
+    <!-- /.pagination -->
+    <nav aria-label="Page navigation" class="text-center">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${page == 0 ? 'hidden':''}">
+                <a class="page-link" th:href="@{'/user/order-history?page=' + ${page - 1}}" aria-label="Previous" >
+                    <label aria-hidden="true">&laquo;</label>
+                    <label class="sr-only">Previous</label>
+                </a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(1,totalPages)}" th:classappend="${i == (page + 1) ? 'active':''}">
+                <a class="page-link" th:href="@{'/user/order-history?page=' + ${i - 1}}" th:text="${i}"></a>
+            </li>
+            <!--      <li class="page-item"><a class="page-link" href="#"></a></li>-->
+
+            <li class="page-item" th:classappend="${page + 1 == totalPages ? 'hidden':''}">
+                <a class="page-link"  th:href="@{'/user/order-history?page=' + ${page + 1}}" aria-label="Next" >
+                    <label aria-hidden="true">&raquo;</label>
+                    <label class="sr-only">Next</label>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.pagination -->
+
+</div>
+<!-- /.box-body -->
+<!-- Order history 2end -->
+
+<!-- Partners strat -->
+<div class="partners bg-white">
+    <div class="container">
+        <h4>Brands <span>$ Partners</span></h4>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="custom-slider slide-box-btn">
+                    <div class="custom-box"><img th:src="@{/assets/user/img/brand/brand-1.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets/user/img/brand/brand-2.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets/user/img/brand/brand-3.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets/user/img/brand/brand-4.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets/user/img/brand/brand-5.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets/user/img/brand/brand-6.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets/user/img/brand/brand-1.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets/user/img/brand/brand-2.png}" alt="brand"></div>
+                    <div class="custom-box"><img th:src="@{/assets/user/img/brand/brand-3.png}" alt="brand"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Partners end -->
+
+<!-- Footer start -->
+<th:block th:insert="/user/layout/footer.html"></th:block>
+<!-- Footer end -->
+
+<th:block th:insert="/user/layout/js.html"></th:block>
+
+</body>
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/events.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:55 GMT -->
+</html>

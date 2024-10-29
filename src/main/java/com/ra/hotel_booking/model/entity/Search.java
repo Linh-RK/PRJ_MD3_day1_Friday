@@ -20,6 +20,8 @@ public class Search {
     private String sort = null;
     private Double priceMin = 0.0;
     private Double priceMax;
+    private Integer Adults;
+    private Integer Children;
 }
 
 

@@ -80,6 +80,14 @@
                             <li><a class="dropdown-item" th:href="@{/user/rooms-details}">Rooms Details 1</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Order
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/user/order-history}">Order history</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Pages
@@ -166,15 +174,14 @@
         <div class="sidebar-navigation">
             <h3 class="heading">Pages</h3>
             <ul class="menu-list">
-                <li><a href="#" class="pt0">Index <em class="fa fa-chevron-down"></em></a>
+                <li><a href="#" class="pt0">Home <em class="fa fa-chevron-down"></em></a>
                     <ul>
-                        <li><a th:href="@{/user/index}">Index 1</a></li>
+                        <li><a th:href="@{/user/index}">Home</a></li>
                     </ul>
                 </li>
                 <li><a href="#" >Rooms <em class="fa fa-chevron-down"></em></a>
                     <ul>
-                        <li><a th:href="@{/user/rooms-col-2}">2 Column</a></li>
-                        <li><a th:href="@{/user/rooms-details}">Rooms Details</a></li>
+                        <li><a th:href="@{/user/rooms-col-2}">Room</a></li>
                     </ul>
                 </li>
                 <li>

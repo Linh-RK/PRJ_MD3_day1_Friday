@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/booking-system.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:54 GMT -->
+<th:block th:insert="/user/layout/head.html" ></th:block>
+<body>
+<th:block th:insert="/user/layout/top.html" ></th:block>
+<!-- Booking flow start -->
+<div class="booking-flow content-area-6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="stepwizard">
+                    <div class="stepwizard-row setup-panel">
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-1" class="btn btn-circle">
+                                <i class="fa fa-folder-o"></i>
+                            </a>
+                            <h3>Select Room</h3>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-2" class="btn btn-default btn-circle">
+                                <i class="fa fa-user"></i>
+                            </a>
+                            <h3>Personal Info</h3>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-4" class="btn btn-default btn-circle btn-success">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <h3>Review</h3>
+                        </div>
+                    </div>
+                </div>
+                <form method="POST" th:object="${bookingDTO}" th:action="@{/user/booking-success}">
+                    <div class="panel panel-primary setup-content" id="step-3">
+                        <div class="panel-body" th:object="${bookingDTO}">
+                            <h3 class="booking-heading-2">Booking Details</h3>
+                            <div class="row g-0 booling-details-box booling-details-box-2 mb-30">
+                                <div class="col-xl-7 col-lg-7 col-md-12">
+                                    <div id="carouselExampleCaptions2" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active" th:each="img : ${bookingDTO.room.images}">
+                                                <img th:src="@{|/uploads/${img.image}|}" class="d-block w-100" alt="photo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-5 col-md-12">
+                                    <div class="info">
+                                        <!--                                    <h4>Your Payment ID: #30211229</h4>-->
+                                        <ul>
+                                            <li>
+                                                <span>Check In:</span> <span th:text="${bookingDTO.checkIn}"></span>
+                                            </li>
+                                            <li>
+                                                <span>Check Out:</span> <span th:text="${bookingDTO.checkOut}"></span>
+                                            </li>
+                                            <li>
+                                                <span>Rooms:</span> <span th:text="${bookingDTO.room.roomNumber}"></span>
+                                            </li>
+                                            <li>
+                                                <span>Adults:</span> <span th:text="${bookingDTO.adults}"></span>
+                                            </li>
+                                            <li>
+                                                <span>Child:</span> <span th:text="${bookingDTO.children}"></span>
+                                            </li>
+
+                                        </ul>
+                                        <div class="your-address">
+                                            <strong>Information</strong>
+                                            <div>
+                                                First name: <span th:text="${bookingDTO.customer.first_name}"></span>
+                                            </div>
+                                            <div>
+                                                Last name: <span th:text="${bookingDTO.customer.last_name}"></span>
+                                            </div>
+                                            <div>
+                                                Email: <span th:text="${bookingDTO.customer.email}"></span>
+                                            </div>
+                                            <div>
+                                                Phone: <span th:text="${bookingDTO.customer.phone}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="price">
+                                        Total: <span th:text="${bookingDTO.totalPrice}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="info-2">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a. Aliquam pellentesque nibh et nibh feugiat gravida. Maecenas ultricies, diam vitae semper placerat, velit risus accumsan nisl, eget tempor lacus est vel</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a. Aliquam pellentesque nibh et nibh feugiat gravida. Maecenas ultricies, diam vitae semper placerat, velit risus accumsan nisl</p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a.
+                                    <p class="mb-30">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a. Aliquam pellentesque nibh et nibh feugiat gravida. Maecenas ultricies, diam vitae semper placerat, velit risus accumsan nisl, eget tempor lacus est vel Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a. Aliquam pellentesque nibh et nibh feugiat gravida. Maecenas ultricies, diam vitae semper placerat, velit risus accumsan nisl Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a.</p>
+                                </div>
+                            </div>
+                            <button class="btn-md btn-theme btn-4 btn-7 nextBtn pull-right" type="button">confirm booking</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Booking flow end -->
+
+<!-- Footer start -->
+<th:block th:insert="/user/layout/footer.html"></th:block>
+<!-- Footer end -->
+
+<th:block th:insert="/user/layout/js.html"></th:block>
+<script type="text/javascript">
+    $(function() {
+        const dtToday = new Date();
+        let month = dtToday.getMonth() + 1;
+        let day = dtToday.getDate();
+        let year = dtToday.getFullYear();
+
+        if (month < 10) month = '0' + month.toString();
+        if (day < 10) day = '0' + day.toString();
+
+        let maxDate = year + '-' + month + '-' + day; // Định dạng yyyy-mm-dd
+        $('#startDate').attr('min', maxDate);
+        $('#endDate').attr('min', maxDate);
+    });
+</script>
+</body>
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/booking-system.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:54 GMT -->
+</html>
+

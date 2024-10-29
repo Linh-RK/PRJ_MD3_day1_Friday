@@ -6,6 +6,7 @@ import com.ra.hotel_booking.model.entity.DTO.RoomDTO;
 import com.ra.hotel_booking.model.entity.Room;
 import com.ra.hotel_booking.model.entity.RoomImages;
 import com.ra.hotel_booking.model.entity.Search;
+import com.ra.hotel_booking.model.entity.SearchBooking;
 import com.ra.hotel_booking.model.service.UploadFile.FileService;
 import com.ra.hotel_booking.model.service.UploadFile.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +35,11 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Boolean create(RoomDTO roomDTO) {
-        //them moi room
-//        Room room = Room.builder()
-//                .roomNumber(roomDTO.getRoomNumber())
-//                .roomType(roomDTO.getRoomType())
-//                .pricePerNight(setPricePerNightByRoomType(roomDTO.getRoomType()))
-//                .availabilityStatus(roomDTO.getAvailabilityStatus())
-//                .description(roomDTO.getDescription())
-//                .build();
         Room room = new Room
                 (roomDTO.getRoomNumber(),roomDTO.getRoomType(),
                 roomDTO.getAvailabilityStatus(),roomDTO.getDescription(),
-                uploadFileService.uploadFile(roomDTO.getImageTitle()));
+                uploadFileService.uploadFile(roomDTO.getImageTitle()),
+                        roomDTO.getMaxAdult(),roomDTO.getMaxChildren());
         System.out.println(room.getRoomType());
 
         int id = roomDAO.create(room);
@@ -103,13 +97,15 @@ public class RoomServiceImpl implements RoomService {
            }
         }
 
-RoomDTO roomDTO1 = new RoomDTO(roomDTO.getRoomNumber(), roomDTO.getRoomType(),roomDTO.getAvailabilityStatus(), roomDTO.getDescription());
+RoomDTO roomDTO1 = new RoomDTO(roomDTO.getRoomNumber(), roomDTO.getRoomType(),roomDTO.getAvailabilityStatus(), roomDTO.getDescription(), roomDTO.getMaxAdult(),roomDTO.getMaxChildren());
     room.setImages(roomImagesList);
 
     room.setRoomNumber(roomDTO.getRoomNumber());
     room.setRoomType(roomDTO.getRoomType());
     room.setAvailabilityStatus(roomDTO.getAvailabilityStatus());
     room.setDescription(roomDTO.getDescription());
+    room.setMaxAdult(roomDTO.getMaxAdult());
+    room.setMaxChildren(roomDTO.getMaxChildren());
     room.setPricePerNight(roomDTO1.getPricePerNight());
     room.setAmenities(roomDTO1.getAmenities());
     room.setHouseRules(roomDTO1.getHouseRules());
@@ -149,5 +145,25 @@ RoomDTO roomDTO1 = new RoomDTO(roomDTO.getRoomNumber(), roomDTO.getRoomType(),ro
         return roomDAO.totalPages(search);
     }
 
+//    ----------
+    @Override
+    public int totalElement(SearchBooking searchBooking) {
+        return roomDAO.totalElement(searchBooking);
+    }
+
+    @Override
+    public List<Room> findAll(SearchBooking searchBooking) {
+        return roomDAO.findAll(searchBooking);
+    }
+
+    @Override
+    public int totalPages(SearchBooking searchBooking) {
+        return roomDAO.totalPages(searchBooking);
+    }
+
+    @Override
+    public boolean isAvailble(int roomId, SearchBooking searchBooking) {
+        return roomDAO.isAvailble(roomId, searchBooking);
+    }
 
 }

@@ -45,7 +45,9 @@
                         <img src="img/logos/logo.png" alt="logo">
                     </a>
                     <h3>Sign into your account</h3>
-                    <form th:action="@{/user/login}" method="GET">
+<!--                    -------------------->
+                    <form th:action="@{/user/login}" method="post">
+                        <p th:if="${error != null}" th:text="${error}" style="color: red"></p>
                         <div class="form-group clearfix">
                             <input name="email" type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
                         </div>

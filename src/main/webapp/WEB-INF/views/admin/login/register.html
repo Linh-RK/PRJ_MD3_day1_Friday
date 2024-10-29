@@ -29,7 +29,7 @@
   <div class="register-box-body">
     <p class="login-box-msg">Register a new membership</p>
 
-    <form th:action="@{/register}" method="post" th:object="${customer}">
+    <form th:action="@{/admin/register}" method="post" th:object="${admin}">
       <div class="form-group has-feedback">
         <input type="text" class="form-control" placeholder="First name" th:field = "*{first_name}">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>

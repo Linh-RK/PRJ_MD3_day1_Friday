@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/booking-system.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:54 GMT -->
+<th:block th:insert="/user/layout/head.html" ></th:block>
+<body>
+<th:block th:insert="/user/layout/top.html" ></th:block>
+<!-- Booking flow start -->
+<div class="booking-flow content-area-6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="stepwizard">
+                    <div class="stepwizard-row setup-panel">
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-1" class="btn btn-success btn-circle">
+                                <i class="fa fa-folder-o"></i>
+                            </a>
+                            <h3>Select Room</h3>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-2" class="btn btn-default btn-circle">
+                                <i class="fa fa-user"></i>
+                            </a>
+                            <h3>Personal Info</h3>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-4" class="btn btn-default btn-circle">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <h3>Review</h3>
+                        </div>
+                    </div>
+                </div>
+<!--                Thông báo booking thành công-->
+                <div>
+                    <h2> Đã đặt phòng thành công !</h2>
+                    <h2> Cảm ơn bạn !</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Booking flow end -->
+
+<!-- Footer start -->
+<th:block th:insert="/user/layout/footer.html"></th:block>
+<!-- Footer end -->
+
+<th:block th:insert="/user/layout/js.html"></th:block>
+<script type="text/javascript">
+    $(function() {
+        const dtToday = new Date();
+        let month = dtToday.getMonth() + 1;
+        let day = dtToday.getDate();
+        let year = dtToday.getFullYear();
+
+        if (month < 10) month = '0' + month.toString();
+        if (day < 10) day = '0' + day.toString();
+
+        let maxDate = year + '-' + month + '-' + day; // Định dạng yyyy-mm-dd
+        $('#startDate').attr('min', maxDate);
+        $('#endDate').attr('min', maxDate);
+    });
+</script>
+</body>
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/booking-system.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:54 GMT -->
+</html>
+

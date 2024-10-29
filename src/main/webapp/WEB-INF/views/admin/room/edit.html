@@ -139,13 +139,6 @@
                             <label>Current Images</label>
                             <div>
                             <div th:each="image, loop : ${room.images}">
-<!--                                <span style="display: inline-block; margin-right: 10px;">-->
-<!--                                    <img th:src="@{|/uploads/${image.image}|}" alt="Room Image" style="width:100px;">-->
-<!--                                    &lt;!&ndash; Checkbox để chọn ảnh cần xóa &ndash;&gt;-->
-<!--&lt;!&ndash;                                    <input type="checkbox" th:field="*{deleteImage}" th:value="${image.id}"/> Delete&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <span th:text="${image.id}"></span>&ndash;&gt;-->
-<!--                                </span>-->
-<!--                                <span th:text="${image.id}"></span>-->
                                 <img th:src="@{|/uploads/${image.image}|}" alt="Room Image" style="width:100px;">
                                 <label>
                                     <input type="checkbox" th:field="*{deleteImage}" th:value="${image.id}"/>
@@ -153,29 +146,6 @@
                             </div>
                             </div>
                         </div>
-<!--                        <div class="form-group">-->
-<!--                            <label class="form-label">Image Title</label>-->
-<!--                            <input type="file" class="form-control" th:field="*{imageTitle}" name="img" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">-->
-<!--                            <img th:src="@{|/uploads/${room.imageTitle}|}" width="100px" id="output" >-->
-<!--                            <small  class="form-text text-muted" style="color:red !important;"-->
-<!--                                    th:if="${errImg != null}" th:text="${errImg}"  th:class="text-danger"></small><br>-->
-<!--                        </div>-->
-
-<!--                        <div class="form-group">-->
-<!--                            <div>Add new</div>-->
-<!--                            <label>Image Detail</label>-->
-<!--                            <input type="file" class="form-control-file" name="newImages" th:field="*{imageList}" multiple="multiple"/>-->
-<!--                            <div>Current Images</div>-->
-<!--                            <span th:each="image, iterStat : ${room.images}">-->
-<!--                                <span>-->
-<!--                                    <img th:src="@{|/uploads/${image.image}|}" alt="Room Image" style="width:100px;">-->
-<!--                                    <input type="checkbox" th:field="*{deleteImage}" th:value="${image.image}"/> Delete-->
-<!--                                </span>-->
-<!--                            </span>-->
-
-<!--                            <small  class="form-text text-muted" style="color:red !important;"-->
-<!--                                    th:if="${errImg != null}" th:text="${errImg}"  th:class="text-danger"></small>-->
-<!--                        </div>-->
 
                         <div class="form-group">
                             <label>Description</label>
@@ -191,6 +161,18 @@
                                         th:text="${status}">
                                 </option>
                             </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Max Adult</label>
+                            <input type="number" th:field="*{maxAdult}" class="form-control" />
+                            <small  class="form-text text-muted" style="color:red !important;" th:errors="*{maxAdult}"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Max Children</label>
+                            <input type="number" th:field="*{maxChildren}" class="form-control" />
+                            <small  class="form-text text-muted" style="color:red !important;" th:errors="*{maxChildren}"></small>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>

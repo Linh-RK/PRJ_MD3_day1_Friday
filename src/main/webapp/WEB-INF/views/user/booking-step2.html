@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/booking-system.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:54 GMT -->
+<th:block th:insert="/user/layout/head.html" ></th:block>
+<body>
+<th:block th:insert="/user/layout/top.html" ></th:block>
+<!-- Booking flow start -->
+<div class="booking-flow content-area-6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="stepwizard">
+                    <div class="stepwizard-row setup-panel">
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-1" class="btn btn-circle">
+                                <i class="fa fa-folder-o"></i>
+                            </a>
+                            <h3>Select Room</h3>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-2" class="btn btn-default btn-circle btn-success">
+                                <i class="fa fa-user"></i>
+                            </a>
+                            <h3>Personal Info</h3>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-4" class="btn btn-default btn-circle">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <h3>Review</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <form method="POST" th:action="@{/user/booking-step3}" th:object="${bookingDTO}">
+                    <div class="panel panel-primary setup-content" id="step-2">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-12 col-sm-12">
+                                    <h3 class="booking-heading-2 black-color">Personal Info</h3>
+                                    <div class="contact-form" >
+                                        <div class="sidebar-widget">
+                                            <div class="row" >
+
+                                            </div>
+                                        </div>
+                                        <div class="sidebar-widget sw-2">
+                                            <h3 class="booking-heading-2">Account Info</h3>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group firstname">
+                                                        <label for="inputfirstname" class="form-label">First Name</label>
+                                                        <input type="text" th:field="*{customer.first_name}" class="form-control" id="inputfirstname" placeholder="First Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group lastname">
+                                                        <label for="inputlastname" class="form-label">Last Name</label>
+                                                        <input type="text" th:field="*{customer.last_name}" class="form-control" id="inputlastname" placeholder="Last Name" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group phone-number">
+                                                        <label for="inputphonenumber" class="form-label">Phone Number</label>
+                                                        <input type="text" th:field="*{customer.phone}" class="form-control" id="inputphonenumber" placeholder="Phone Number" >
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group email">
+                                                        <label for="inputemailaddress" class="form-label">Email Address</label>
+                                                        <input type="email" th:field="*{customer.email}" class="form-control" id="inputemailaddress" placeholder="Email Address" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12">
+                                                    <div class="checkbox mb-30 clearfix">
+                                                        <div class="ez-checkbox pull-left">
+                                                            <label>
+                                                                <input type="checkbox" class="ez-hide">
+                                                                By Sign up you are agree with our <a href="#">terms and condition</a>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-12 col-sm-12">
+                                    <h3 class="booking-heading-2">Booking Details</h3>
+                                    <div class="booling-details-box">
+                                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-indicators">
+                                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                            </div>
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active" th:each="img : ${bookingDTO.room.images}">
+                                                    <img th:src="@{|/uploads/${img.image}|}" class="d-block w-100" alt="photo">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="info">
+                                            <h4><a href="#" th:field="*{room.roomType}"></a></h4>
+                                            <ul>
+                                                <li>
+                                                    <span>Check In:</span> <span th:text="${bookingDTO.checkIn}"></span>
+                                                    <input type="hidden" th:field="*{checkIn}">
+                                                </li>
+                                                <li>
+                                                    <span>Check Out:</span> <span th:text="${bookingDTO.checkOut}"></span>
+                                                    <input type="hidden" th:field="*{checkOut}">
+                                                </li>
+                                                <li>
+                                                    <span>Rooms:</span> <span th:text="${bookingDTO.room.roomNumber}"></span>
+                                                    <input type="hidden" th:field="*{room.roomId}">
+                                                </li>
+                                                <li>
+                                                    <span>Adults:</span> <span th:text="${bookingDTO.adults}"></span>
+                                                    <input type="hidden" th:field="*{adults}">
+                                                </li>
+                                                <li>
+                                                    <span>Child:</span> <span th:text="${bookingDTO.children}"></span>
+                                                    <input type="hidden" th:field="*{children}">
+                                                </li>
+                                            </ul>
+                                            <div class="price">
+                                                Total: <span th:text="${bookingDTO.calculateRentDetails()}"></span>
+                                                <input type="hidden" th:field="*{totalPrice}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-md btn-theme btn-4 btn-7 nextBtn pull-right" type="submit">Save and continue</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Booking flow end -->
+
+<!-- Footer start -->
+<th:block th:insert="/user/layout/footer.html"></th:block>
+<!-- Footer end -->
+
+<th:block th:insert="/user/layout/js.html"></th:block>
+<script type="text/javascript">
+    $(function() {
+        const dtToday = new Date();
+        let month = dtToday.getMonth() + 1;
+        let day = dtToday.getDate();
+        let year = dtToday.getFullYear();
+
+        if (month < 10) month = '0' + month.toString();
+        if (day < 10) day = '0' + day.toString();
+
+        let maxDate = year + '-' + month + '-' + day; // Định dạng yyyy-mm-dd
+        $('#startDate').attr('min', maxDate);
+        $('#endDate').attr('min', maxDate);
+    });
+</script>
+</body>
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/hotel-alpha-html/HTML/main/booking-system.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Oct 2024 07:56:54 GMT -->
+</html>

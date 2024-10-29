@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,6 +23,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
+@EnableScheduling
 @ComponentScan(basePackages = "com.ra.hotel_booking")
 public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
@@ -96,12 +98,17 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:/Users/phamlinh/Desktop/HOTEL_BOOKING/src/main/webapp/uploads/");
     }
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry)
-//    {
-//        registry.addInterceptor(new InterceptorsAdmin()).addPathPatterns("/admin/**");
-////        registry.addInterceptor().addPathPatterns("/user/**")
-//    }
-//    cấu hình đa ngôn ngữ
+    @Override
+    public void addInterceptors(InterceptorRegistry registry)
+    {
+//        registry.addInterceptor(new InterceptorsAdmin())
+//                .addPathPatterns("/admin/**")
+//                .excludePathPatterns("/login","/register","/forgot-password");
+        registry.addInterceptor(new InterceptorCustomer())
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/login","/user/register","/user/forgot-password","/user/index", "/user/events"
+                ,"/user/events-detail","/user/about", "/user/contact");
+    }
+
 
 }

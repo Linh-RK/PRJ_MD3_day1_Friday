@@ -1,4 +1,4 @@
-package com.ra.hotel_booking.model.dao.admin.customer;
+package com.ra.hotel_booking.model.dao.user.customer;
 
 import com.ra.hotel_booking.model.entity.Customer;
 import com.ra.hotel_booking.model.entity.Role;
@@ -12,17 +12,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
-
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
     @Autowired
     private SessionFactory sessionFactory;
-
-
     @Override
     public boolean register(Customer customer) {
         Set<Role> roles = new HashSet<>();
-        roles.add(findRoleByName(RoleName.ADMIN)) ;
+        roles.add(findByRoleName(RoleName.CUSTOMER));
         customer.setFirst_name(customer.getFirst_name());
         customer.setLast_name(customer.getLast_name());
         customer.setRoles(roles);
@@ -33,11 +30,8 @@ public class CustomerDAOImpl implements CustomerDAO {
             tx = session.beginTransaction();
             session.save(customer);
             tx.commit();
-
-        }catch (Exception e) {
-            if(tx != null) {
-                tx.rollback();
-            }
+        } catch (Exception e) {
+            tx.rollback();
             throw new RuntimeException(e);
         }
         return false;
@@ -45,28 +39,27 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public Customer login(Customer customer) {
-        Transaction tx = null;
         try(Session session = sessionFactory.openSession()) {
-            Customer customerLogin = session.createQuery("from Customer c where c.email = :_email", Customer.class)
+            Customer customerLogin = (Customer) session.createQuery("from Customer c where c.email= :_email",Customer.class)
                     .setParameter("_email", customer.getEmail())
                     .getSingleResult();
-            if(customerLogin != null) {
-                if(BCrypt.checkpw(customer.getPassword(), customerLogin.getPassword())) {
+            if(customerLogin !=null){
+                if(BCrypt.checkpw(customer.getPassword(), customerLogin.getPassword())){
                     return customerLogin;
                 }
             }
             return null;
-        } catch (Exception e) {
+        }catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Role findRoleByName(RoleName roleName ) {
+    private Role findByRoleName(RoleName roleName) {
         try(Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Role r where r.roleName=:roleName", Role.class)
-                    .setParameter("roleName", roleName)
+            return session.createQuery("from Role r where r.roleName = :_roleName ",Role.class)
+                    .setParameter("_roleName",roleName)
                     .getSingleResult();
-        }catch (Exception e) {
+        }catch (Exception e){
             throw new RuntimeException(e);
         }
     }

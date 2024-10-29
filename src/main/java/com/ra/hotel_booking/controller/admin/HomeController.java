@@ -1,6 +1,7 @@
 package com.ra.hotel_booking.controller.admin;
 
 import com.ra.hotel_booking.model.entity.RoomImages;
+import com.ra.hotel_booking.model.entity.SearchBooking;
 import com.ra.hotel_booking.model.service.admin.room.RoomImagesService;
 import com.ra.hotel_booking.model.service.admin.room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,11 @@ public class HomeController {
     private RoomService roomService;
     @Autowired
     private RoomImagesService roomImagesService;
+
     @GetMapping("/")
     public String home(Model model) {
+        SearchBooking searchBooking = new SearchBooking();
+        model.addAttribute("searchBooking", searchBooking);
         model.addAttribute("title", "Hotel Booking");
         model.addAttribute("rooms", roomService.findAll());
         model.addAttribute("roomImage", roomImagesService.findAll());

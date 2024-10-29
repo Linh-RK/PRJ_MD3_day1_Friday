@@ -44,12 +44,7 @@ public class Room {
    @Fetch(FetchMode.SUBSELECT)
    private List<RoomImages> images = new ArrayList<>();
 
-//    @ElementCollection
-//    private List<String> imagesDisplay ;
     private  String imageTitle;
-
-//    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<RoomAmentities> roomAmenities;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -59,10 +54,14 @@ public class Room {
     @Fetch(FetchMode.SUBSELECT)
     private List<String> houseRules; // Thêm trường quy định nhà
 
+    private int maxAdult;
+
+    private int maxChildren;
+
     public Room() {
     }
 
-    public Room(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description, String imageTitle) {
+    public Room(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description, String imageTitle, int maxAdult, int maxChildren) {
         this.roomNumber = roomNumber;
         this.roomType = roomType;
         this.pricePerNight = setPricePerNightByRoomType(roomType);
@@ -71,7 +70,8 @@ public class Room {
         this.amenities = setAmenitiesByRoomType(roomType);
         this.houseRules = setHouseRulesByRoomType(roomType);
         this.imageTitle = imageTitle;
-
+        this.maxAdult = maxAdult;
+        this.maxChildren = maxChildren;
     }
 
 

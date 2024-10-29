@@ -35,7 +35,7 @@ public class RoomController {
 
     @Autowired
     private RoomImagesService roomImagesService;
-
+    public static int oldRoomNumber = 0;
     public int page;
     public static String oldNameRoom = "";
     public int totalPages;
@@ -55,6 +55,12 @@ public class RoomController {
         }
         if (search.getPriceMax() == null) {
             search.setPriceMax(roomService.maxPrice());
+        }
+        if (search.getAdults() == null) {
+            search.setAdults(1);
+        }
+        if (search.getChildren() == null) {
+            search.setChildren(0);
         }
         totalPages = roomService.totalPages(search);
 
@@ -115,7 +121,7 @@ public class RoomController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
         Room room = roomService.findById(id);
-        RoomDTO roomDTO = new RoomDTO(room.getRoomNumber(), room.getRoomType(), room.getAvailabilityStatus(), room.getDescription());
+        RoomDTO roomDTO = new RoomDTO(room.getRoomNumber(), room.getRoomType(), room.getAvailabilityStatus(), room.getDescription(),room.getMaxAdult(),room.getMaxChildren());
         model.addAttribute("availabilityStatusList", availabilityStatusList);
         model.addAttribute("roomTypeList", roomTypeList);
         model.addAttribute("roomDTO", roomDTO);
@@ -126,37 +132,19 @@ public class RoomController {
 
     @PostMapping("/edit/{id}")
     public String update(@Valid @ModelAttribute("roomDTO") RoomDTO roomDTO,
-//                         @RequestParam("img") MultipartFile imageTitle,  // Ảnh tiêu đề
-//                         @RequestParam("newImages") MultipartFile[] newImages,  // Ảnh chi tiết mới
-//                         @RequestParam(value = "deleteImages", required = false) List<Long> deleteImageIds,  // ID của ảnh cần xóa
                          BindingResult result,
                          @PathVariable int id,
                          Model model,
                          RedirectAttributes redirectAttributes) {
         Room room = roomService.findById(id);
-//        if (result.hasErrors() ||
-//                room.getImages().size()+ newImages.length - deleteImageIds.size() <= 0)
-//        {
-////        if (result.hasErrors() || roomDTO.getImageTitle().isEmpty() ) {
-//            model.addAttribute("availabilityStatusList", availabilityStatusList);
-//            model.addAttribute("roomTypeList", roomTypeList);
-//            model.addAttribute("roomDTO", roomDTO);
-//            model.addAttribute("id", id);
-//            model.addAttribute("errImg", "Please choose at least one image!");
-//            model.addAttribute("errImgTitle", "Please choose a image!");
-//            model.addAttribute("room", roomService.findById(id));
-//            return "/admin/room/edit";
-//        }
-        System.out.println(Objects.requireNonNull(roomDTO.getImageTitle().getOriginalFilename()).isEmpty());
-        System.out.println(roomDTO.getImageTitle().getOriginalFilename());
-
-        if(!roomDTO.getDeleteImage().isEmpty()) {
-            System.out.println(roomDTO.getDeleteImage().size());
-            System.out.println(roomDTO.getDeleteImage().get(0));
-        }else{
-            roomDTO.setDeleteImage(new ArrayList<>());
+        oldRoomNumber = room.getRoomNumber();
+        if (result.hasErrors()) {
+            model.addAttribute("roomDTO", roomDTO);
+            model.addAttribute("roomTypeList", roomTypeList);
+            model.addAttribute("availabilityStatusList", availabilityStatusList);
+            model.addAttribute("errImg", "Please choose at least one image!");
+            model.addAttribute("errImgTitle", "Please choose a image!");
         }
-//
         if (roomService.update(roomDTO,id)) {
             return "redirect:/admin/room";
         }
@@ -169,9 +157,3 @@ public class RoomController {
         return "redirect:/admin/room";
     }
 }
-
-    //    --------------------------------------------------------------------------
-//
-//    --------------------------------------------------------------------------
-
-

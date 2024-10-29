@@ -28,7 +28,7 @@ public class RoomDTO {
 
     @NotNull(message = "số phòng không được để trống")
     @Min(value = 1, message = "Số phòng phải lớn hơn 0")
-//    @Unique
+    @Unique
     private Integer roomNumber;
 
     @Enumerated(EnumType.STRING)
@@ -64,13 +64,21 @@ public class RoomDTO {
     @Fetch(FetchMode.SUBSELECT)
     private List<String> houseRules; // Thêm trường quy định nhà
 
+    @NotNull
+    @Min(value = 1, message = "Phòng chứa tối thiểu một người lớn")
+    private int maxAdult;
+
+    @NotNull
+    @Min(value = 0,message = "Số trẻ mỗi phòng từ 0")
+    private Integer maxChildren;
+
     // Chính sách hủy phòng (Cancellation)
-    private String cancellationPolicy;
+    private Integer cancellationPolicy;
 
     // Danh sách đánh giá phòng (Room Reviews)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
-    public RoomDTO(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description) {
+    public RoomDTO(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description, int maxAdult, int maxChildren) {
         this.roomNumber = roomNumber;
         this.roomType = roomType;
         this.pricePerNight = setPricePerNightByRoomType(roomType);
@@ -78,9 +86,11 @@ public class RoomDTO {
         this.description = description;
         this.amenities = setAmenitiesByRoomType(roomType);
         this.houseRules = setHouseRulesByRoomType(roomType);
+        this.maxAdult = maxAdult;
+        this.maxChildren = maxChildren;
     }
 
-    public RoomDTO(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description, MultipartFile imageTitle,List<MultipartFile> imageList, List<String> deleteImage) {
+    public RoomDTO(Integer roomNumber, RoomTypeName roomType, AvailabilityStatus availabilityStatus, String description, MultipartFile imageTitle,List<MultipartFile> imageList, List<String> deleteImage, int maxAdult, int maxChildren) {
         this.roomNumber = roomNumber;
         this.roomType = roomType;
         this.pricePerNight = setPricePerNightByRoomType(roomType);
@@ -90,6 +100,8 @@ public class RoomDTO {
         this.imageList = imageList;
         this.amenities = setAmenitiesByRoomType(roomType);
         this.houseRules = setHouseRulesByRoomType(roomType);
+        this.maxAdult = maxAdult;
+        this.maxChildren = maxChildren;
     }
 
     public void setTypeName(RoomTypeName roomType) {
